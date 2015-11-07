@@ -1,0 +1,64 @@
+﻿<div ng-init="populate()">
+    <p class="error">{{error}}</p>
+    <p>{{loadingMessage}}</p>
+    <div class="panel">
+        <div data-ng-hide="isLoading">Select your subscription and resource group below, if you subscription is not registered for Microsoft.Network resource provider it 
+        will be automatically registered when you selected it below.</div>
+        <!--
+        <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">HTML</a></li>
+    <li><a href="#">CSS</a></li>
+    <li><a href="#">JavaScript</a></li>
+  </ul>
+</div>    
+        -->
+     
+
+        <select id="AzureSubscription" data-ng-hide="isLoading"
+                ng-change="changeSubscription(subListSelected)" 
+                ng-model="subListSelected"
+                ng-options="item.id as item.displayName for item in subList">
+          
+        </select>
+        <select id="AzureResourceGroup" data-ng-hide="isSubscriptionNotSelected"
+                ng-change="changeResourceGroup(resourceGroupListSelected)"
+                ng-model="resourceGroupListSelected"
+                ng-options="item.id as item.name for item in resourceGroupList">
+
+        </select>
+
+
+
+<table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
+         <tbody>
+              <tr data-ng-repeat="item in dnsZoneList">
+                    <td>
+                        <p data-ng-hide="item.edit">{{item.name}}</p>
+                        <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressTodo.Description" class="form-control" />
+                    </td>
+                    <td>
+                        <p data-ng-hide="item.edit || editingInProgress">
+                            <a data-ng-click="editSwitch(item)" href="javascript:;">Edit</a> |
+                            <a data-ng-click="delete(item.ID)" href="javascript:;">Delete</a>
+                        </p>
+                        <p data-ng-show="item.edit">
+                            <a data-ng-click="update(item)" href="javascript:;">Save</a> |
+                            <a data-ng-click="editSwitch(item)" href="javascript:;">Cancel</a>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="input-group" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
+            <input ng-model="newDnsZoneName" class="form-control" />
+            <span class="input-group-btn">
+                <button ng-click="add();" class="btn btn-default">Add</button>
+            </span>
+        </div>
+
+    </div>
+</div>
