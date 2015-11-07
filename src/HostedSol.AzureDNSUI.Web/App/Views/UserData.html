@@ -1,0 +1,40 @@
+﻿<div>
+    <h3>
+        Id_token content
+    </h3>
+    <p>{{userInfo.token}}</p>
+    <p>aud:{{userInfo.profile.aud}}</p>
+    <p>iss:{{userInfo.profile.iss}}</p>
+    <p>iat:{{userInfo.profile.iat}}</p>
+    <p>nbf:{{userInfo.profile.nbf}}</p>
+    <p>exp:{{userInfo.profile.exp}}</p>
+    <p>ver:{{userInfo.profile.ver}}</p>
+    <p>tid:{{userInfo.profile.tid}}</p>
+    <p>amr:{{userInfo.profile.amr}}</p>
+    <p>oid:{{userInfo.profile.oid}}</p>
+    <p>upn:{{userInfo.profile.upn}}</p>
+    <p>unique_name:{{userInfo.profile.unique_name}}</p>
+    <p>sub:{{userInfo.profile.sub}}</p>
+    <p>family_name:{{userInfo.profile.family_name}}</p>
+    <p>given_name:{{userInfo.profile.given_name}}</p>
+    <p>pwd_exp:{{userInfo.profile.pwd_exp}}</p>
+    <p>pwd_url:{{userInfo.profile.pwd_url}}</p>
+    
+
+    <script language="javascript">
+       // var URLCall = 'https://management.azure.com/subscriptions/aac5f359-926b-4be4-8929-da702a750199/resourceGroups/JoelTestingRG/providers/Microsoft.Network/dnsZones?api-version=2014-02-14-preview'
+        //URLCall = 'https://management.azure.com/subscriptions?api-version=2014-04-01-preview';
+        //Authorization: Bearer eyJ0eXAiOiJKV1QiLC***lwO1mM7Cw6JWtfY2lGc5A
+
+       // var auth = '{{userInfo.token}}';
+     //   $("#btnRun").click(function () {
+      //      $.ajax({
+     //           beforeSend: function (xhr) { xhr.setRequestHeader("Authorization", "Bearer " + auth); },
+     //           url: URLCall
+     //       }).then(function (data) {
+     //           $('#datadiv').append(data);
+     //       });
+    //    });
+
+    </script>
+</div>
