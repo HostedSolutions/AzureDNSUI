@@ -1,5 +1,5 @@
 ﻿'use strict';
-angular.module('todoApp')
+angular.module('AzureDNSUI')
 .controller('dnsZoneCtrl', ['$scope', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'subscriptionsSvc', 'resourceGroupSvc',
                         function ($scope, $location, dnsZoneSvc, adalService, subscriptionSvc, resourceGroupSvc) {
     $scope.error = "";
@@ -35,16 +35,12 @@ angular.module('todoApp')
             var providers = results.value;
             for (i = 0; i < providers.length; i++) {
                var provider = providers[i];
-
                 if (provider.namespace == 'Microsoft.Network') {
                     console.log('found him')
                     if (provider.registrationState == 'NotRegistered') {
                         console.log('Resource provider not registered, registering now.')
                         subscriptionSvc.setResourceProvider(item, 'Microsoft.Network')
                     }
-                }
-                else {
-                    console.log(provider.namespace);
                 }
             }
         }).error(function (err) {

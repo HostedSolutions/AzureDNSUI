@@ -1,5 +1,5 @@
 ﻿'use strict';
-angular.module('todoApp')
+angular.module('AzureDNSUI')
 .factory('todoListSvc', ['$http', function ($http) {
     return {
         getItems : function(){

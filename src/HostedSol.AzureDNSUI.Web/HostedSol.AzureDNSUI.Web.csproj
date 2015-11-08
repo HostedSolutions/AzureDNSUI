@@ -145,10 +145,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Scripts\ctrl\RecordSetCtrl.js" />
     <Content Include="App\Scripts\lib\adal-angular.js" />
     <Content Include="App\Scripts\lib\adal.js" />
     <Content Include="App\Scripts\app.js" />
-    <Content Include="App\Scripts\fac\dnsRecordSvc.js" />
+    <Content Include="App\Scripts\fac\recordSetSvc.js" />
     <Content Include="App\Scripts\fac\dnsZoneSvc.js" />
     <Content Include="App\Scripts\ctrl\homeCtrl.js" />
     <Content Include="App\Scripts\ctrl\indexCtrl.js" />
@@ -158,6 +159,8 @@
     <Content Include="App\Scripts\ctrl\todoListCtrl.js" />
     <Content Include="App\Scripts\fac\todoListSvc.js" />
     <Content Include="App\Scripts\ctrl\userDataCtrl.js" />
+    <Content Include="App\Scripts\mod\DnsZone.js" />
+    <Content Include="App\Views\DnsZone-RecordSet.html" />
     <Content Include="App\Views\DnsZone.html" />
     <Content Include="App\Views\Home.html" />
     <Content Include="App\Views\TodoList.html" />
@@ -168,6 +171,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="default.aspx" />
+    <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

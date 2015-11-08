@@ -1,5 +1,5 @@
 ﻿'use strict';
-angular.module('todoApp')
+angular.module('AzureDNSUI')
 .controller('userDataCtrl', ['$scope', 'adalAuthenticationService', 'subscriptionsSvc', function ($scope, adalService, subscriptionsSvc) {
     
 

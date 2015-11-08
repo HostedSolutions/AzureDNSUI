@@ -1,5 +1,5 @@
 ﻿'use strict';
-angular.module('todoApp')
+angular.module('AzureDNSUI')
 .factory('subscriptionsSvc', ['$http', function ($http) {
     return {
         CallURL: 'https://management.azure.com',

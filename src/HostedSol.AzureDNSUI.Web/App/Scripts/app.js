@@ -5,23 +5,28 @@ angular.module('exceptionOverride', []).factory('$exceptionHandler', function ()
         throw exception;
     };
 });
-angular.module('todoApp', ['ngRoute','AdalAngular'])
-.config(['$routeProvider', '$httpProvider', 'adalAuthenticationServiceProvider', function ($routeProvider, $httpProvider, adalProvider) {
+angular.module('AzureDNSUI', ['AdalAngular','ui.router'])
+.config(['$urlRouterProvider', '$httpProvider', '$stateProvider', 'adalAuthenticationServiceProvider', function ($routeProvider, $httpProvider, $stateProvider, adalProvider) {
 
-    $routeProvider.when("/Home", {
+    $routeProvider.otherwise("/Home");
+
+    $stateProvider.state("Home", {
+        url:"/Home",
         controller: "homeCtrl",
-        templateUrl: "/App/Views/Home.html",
-    }).when("/TodoList", {
-        controller: "todoListCtrl",
-        templateUrl: "/App/Views/TodoList.html",
-        requireADLogin: true,
-    }).when("/UserData", {
+        templateUrl: "App/Views/Home.html",
+    }).state("UserData", {
+        url:"/UserData",
         controller: "userDataCtrl",
-        templateUrl: "/App/Views/UserData.html",
-    }).when("/DnsZone", {
-        controller: "dnsZoneCtrl",
-        templateUrl: "/App/Views/DnsZone.html",
-    }).otherwise({ redirectTo: "/Home" });
+        templateUrl: "App/Views/UserData.html",
+    }).state('DnsZone', {
+           url: '/DnsZone',
+           templateUrl: 'App/Views/DnsZone.html',
+           controller: 'dnsZoneCtrl'
+    }).state('RecordSet', {
+           url: '/RecordSet/:id',
+           templateUrl: 'App/Views/DnsZone-RecordSet.html',
+           controller: 'recordSetCtrl'
+       });
 
     adalProvider.init(
         {

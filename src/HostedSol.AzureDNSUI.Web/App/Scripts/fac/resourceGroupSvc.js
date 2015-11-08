@@ -1,5 +1,5 @@
 ﻿'use strict';
-angular.module('todoApp')
+angular.module('AzureDNSUI')
 .factory('resourceGroupSvc', ['$http', function ($http) {
     return {
         //GET https://management.azure.com/subscriptions/{subscription-id}/resourcegroups?api-version={api-version}&$top={top}$skiptoken={skiptoken}&$filter={filter}

@@ -1,6 +1,6 @@
 ﻿'use strict';
-angular.module('todoApp')
-.factory('dnsRecordSvc', ['$http', function ($http) {
+angular.module('AzureDNSUI')
+.factory('recordSetSvc', ['$http', function ($http) {
     return {
         zoneName:"",
         subscriptionId:"",
