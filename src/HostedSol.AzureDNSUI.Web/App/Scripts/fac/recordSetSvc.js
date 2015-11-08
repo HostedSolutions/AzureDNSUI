@@ -2,12 +2,9 @@
 angular.module('AzureDNSUI')
 .factory('recordSetSvc', ['$http', function ($http) {
     return {
-        zoneName:"",
-        subscriptionId:"",
-        resourceGroupName: "",
+        recordSet: "",
         CallURL: function (){
-            'https://management.azure.com/subscriptions/' + subscriptionId +
-            '/resourceGroups/' + resourceGroupName + '/providers/Microsoft.Network/dnsZones/' + zoneName;
+            return 'https://management.azure.com' + this.recordSet;
         },
         getItems: function (recordType) {
             /*
@@ -85,10 +82,10 @@ angular.module('AzureDNSUI')
 }
             */
             if (recordType != null) {
-                return $http.get(CallURL + '/' + recordType + '?api-version=2014-04-01-preview');
+                return $http.get(this.CallURL() + '/' + recordType + '?api-version=2015-05-04-preview');
             }
             else {
-                return $http.get(CallURL + '/recordsets?api-version=2014-04-01-preview');
+                return $http.get(this.CallURL() + '/recordsets?api-version=2015-05-04-preview');
             }
         },
         getItem: function (recordType, recordSetName) {
@@ -112,152 +109,205 @@ angular.module('AzureDNSUI')
             //        ]
             //    }
             //}
-            return $http.get('/'recordType}/{recordSetName}' + id + '?api-version=2014-04-01-preview');
+            //return $http.get('/'recordType}/{recordSetName}' + id + '?api-version=2015-05-04-preview');
         },
-        postItem: function (item) {
-            return $http.post('/api/TodoList/', item);
+        ///////////////////////////////////////////////////////////////A
+        //{
+        //    "location": "global",
+        //    "tags": {},
+        //    "properties": {
+        //        "TTL": 300,
+        //        "ARecords": [
+        //            {
+        //                "ipv4Address": "1.2.3.4"
+        //            },
+        //            {
+        //                "ipv4Address": "1.2.3.5"
+        //            }
+        //        ]
+        //    }
+        //}
+        addA: function (hostName)
+        {
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            //var ARecord = new Object();
+            //ARecord.ipv4Address = ipv4Address;
+            //o.properties.ARecords = [ipv4Address];
+            o.properties.ARecords = new Object();
+            return $http.put(this.CallURL() + '/A/' + hostName + '?api-version=2015-05-04-preview', o);
         },
-        putItem: function (item) {
-            //PUT / PATCH https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{recordSetName}?api-version={api-version}
-            /*
- A
+        updateA: function (aRecords) {
+            
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            //var dARecords = Array();
+            //for (x = 0; x < ipv4Addresses.length; x++)
+            //{
+            //    var ARecord = new Object();
+            //    ARecord.ipv4Address = ipv4Addresses;
+            //    dARecords[x]=ARecord;
+            //}
+            o.properties.ARecords = aRecords;
+            
+            return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
+        },
+        /*
+NS
 {
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "ARecords": [
-         {
-            "ipv4Address": "1.2.3.4"
-         },
-         {
-            "ipv4Address": "1.2.3.5"
-         }
-     ]
-  }
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "NSRecords": [
+        {
+           "nsdname": "ns1.contoso.com"
+        },
+        {
+           "nsdname": "ns2.contoso.com"
+        }
+    ]
+ }
 }
+        */
+        addNS: function (hostName, nsdname) {
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            var NSRecord = new Object();
+            NSRecord.nsdname = nsdname;
+            o.properties.NSRecords = [nsdname];
+
+            return $http.put(this.CallURL() + '/' + hostName + '?api-version=2015-05-04-preview', o);
+        },
+        updateNS: function (nsdname) {
+
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            var NSRecord = new Object();
+            NSRecord.nsdname = nsdname;
+            o.properties.NSRecords = [nsdname];
+
+            return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
+        },
+        /*
+        
+SOA
+{
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "SOARecord": {
+        "email": "dnshst.microsoft.com",
+        "expireTime": 604800,
+        "host": "ns1-01.azure-dns.com",
+        "minimumTTL": 300,
+        "refreshTime": 900,
+        "retryTime": 300
+    }
+ }
+}
+
 AAAA
 {
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "AAAARecords": [
-         {
-            "ipv6Address": "2607:f8b0:4009:1803::1005"
-         },
-         {
-            "ipv6Address": "2607:f8b0:4009:1803::1006"
-         }
-     ]
-  }
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "AAAARecords": [
+        {
+           "ipv6Address": "2607:f8b0:4009:1803::1005"
+        },
+        {
+           "ipv6Address": "2607:f8b0:4009:1803::1006"
+        }
+    ]
+ }
 }
 CNAME
 {
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "CNAMERecord": {
-         "cname": "contoso.com"
-     }
-  }
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "CNAMERecord": {
+        "cname": "contoso.com"
+    }
+ }
 }
 MX
 {
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "MXRecords": [
-         {
-            "preference": "10",
-            "exchange": "mail1.contoso.com"
-         },
-         {
-            "preference": "20",
-            "exchange": "mail2.contoso.com"
-         }
-     ]
-  }
-}
-NS
-{
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "NSRecords": [
-         {
-            "nsdname": "ns1.contoso.com"
-         },
-         {
-            "nsdname": "ns2.contoso.com"
-         }
-     ]
-  }
-}
-SOA
-{
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "SOARecord": {
-         "email": "dnshst.microsoft.com",
-         "expireTime": 604800,
-         "host": "ns1-01.azure-dns.com",
-         "minimumTTL": 300,
-         "refreshTime": 900,
-         "retryTime": 300
-     }
-  }
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "MXRecords": [
+        {
+           "preference": "10",
+           "exchange": "mail1.contoso.com"
+        },
+        {
+           "preference": "20",
+           "exchange": "mail2.contoso.com"
+        }
+    ]
+ }
 }
 SRV
 {
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "SRVRecords": [
-         {
-            "priority": 1,
-            "weight": 5,
-            "port": 8080,
-            "target": "target1.contoso.com"
-         },
-         {
-            "priority": 2,
-            "weight": 25,
-            "port": 8080,
-            "target": "target2.contoso.com"
-         }
-     ]
-  }
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "SRVRecords": [
+        {
+           "priority": 1,
+           "weight": 5,
+           "port": 8080,
+           "target": "target1.contoso.com"
+        },
+        {
+           "priority": 2,
+           "weight": 25,
+           "port": 8080,
+           "target": "target2.contoso.com"
+        }
+    ]
+ }
 }
 
 
 Note: The ‘Service’ and ‘Protocol’ should be specified as part of the record name, including leading underscores
 TXT
 {
-  "location": "global",
-  "tags": {},
-  "properties": {
-     "TTL": 300,
-     "TXTRecords": [
-         {
-            "value": "The quick brown fox jumps over the lazy dog.”
-         },
-         {
-            "value": "One two three four five.”
-         }
-     ]
-  }
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "TXTRecords": [
+        {
+           "value": "The quick brown fox jumps over the lazy dog.”
+        },
+        {
+           "value": "One two three four five.”
+        }
+    ]
+ }
 }
 https://msdn.microsoft.com/en-us/library/azure/mt130640.aspx
- */
-            return $http.put('/api/TodoList/', item);
-        },
+*/
         deleteItem: function (id) {
             //DELETE https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}?api-version={api-version}
             return $http({

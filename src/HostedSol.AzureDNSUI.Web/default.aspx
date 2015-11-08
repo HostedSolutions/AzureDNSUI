@@ -62,6 +62,8 @@
         <script src="App/Scripts/ctrl/userDataCtrl.js"></script>
         <script src="App/Scripts/fac/subscriptionsSvc.js"></script>
         <script src="App/Scripts/ctrl/dnsZoneCtrl.js"></script>
+        <script src="App/Scripts/ctrl/recordSetCtrl.js"></script>
+        <script src="App/Scripts/fac/recordSetSvc.js"></script>
         <script src="App/Scripts/fac/dnsZoneSvc.js"></script>
         <script src="App/Scripts/fac/resourceGroupSvc.js"></script>
         

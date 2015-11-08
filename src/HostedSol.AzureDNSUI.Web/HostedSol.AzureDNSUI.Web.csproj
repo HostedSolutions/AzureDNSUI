@@ -159,7 +159,7 @@
     <Content Include="App\Scripts\ctrl\todoListCtrl.js" />
     <Content Include="App\Scripts\fac\todoListSvc.js" />
     <Content Include="App\Scripts\ctrl\userDataCtrl.js" />
-    <Content Include="App\Scripts\mod\DnsZone.js" />
+    <Content Include="App\Scripts\mod\DnsZoneRecords.js" />
     <Content Include="App\Views\DnsZone-RecordSet.html" />
     <Content Include="App\Views\DnsZone.html" />
     <Content Include="App\Views\Home.html" />
