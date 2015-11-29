@@ -33,19 +33,27 @@
                     </tbody>
                 </table>
                 <div>Add new CNAME Record</div>
-                <div class="form-group">
-                    <label for="CNAMENewName">CNAME:</label>
-                    <input id="CNAMENewName" ng-model="sub.newRecName" class="form-control"/>
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="CNAMENewName" class="control-label col-xs-2">CNAME</label>
+                        <div class="col-xs-7">
+                            <input id="CNAMENewName" ng-model="sub.newRecName"  class="form-control" />
+                        </div>
                     </div>
-                <div class="form-group">
-                    <label for="CNAMENewVale">CNAME Value:</label>
-                    <input id="CNAMENewVale" ng-model="sub.newRecValue" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <span class="input-group-btn">
-                        <button ng-click="addRec(sub);" class="btn btn-default">Add</button>
-                    </span>
-                </div>
+                    <div class="form-group">
+                        <label for="CNAMENewVale" class="control-label col-xs-2">CNAME Value</label>
+                        <div class="col-xs-7">
+                            <input id="CNAMENewVale" ng-model="sub.newRecValue" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-2 col-xs-7">
+                            <button ng-click="addRec(sub);" type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+
+                </form>
             </div>
        
     </treasure-overlay-spinner>
