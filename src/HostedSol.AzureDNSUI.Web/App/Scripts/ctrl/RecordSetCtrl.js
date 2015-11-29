@@ -41,6 +41,13 @@ angular.module('AzureDNSUI')
                                    params: {
                                        Id: $scope.dnsZoneSvcID
                                    }
+                               },
+                               {
+                                   heading: 'MX Records',
+                                   route: 'RecordSet.mxRecordsCtrl',
+                                   params: {
+                                       Id: $scope.dnsZoneSvcID
+                                   }
                                }
                             ];
                         

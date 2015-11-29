@@ -1,10 +1,68 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
+﻿<div ng-init="populate()">
+    <h3>MX Records</h3>
+    <treasure-overlay-spinner active='spinner.active'>
+        <div data-ng-repeat="sub in MXRecs">
+            <div class="col-md-2" style="border-top: solid thin gainsboro">
+                <h4>{{sub.name}}</h4>
+            </div>
+            <div class="col-md-10" style="padding-bottom: 10px;">
 
-</body>
-</html>
+                <div ng-show="sub.properties.MXRecords.length == 0">
+                    <em>There are no IPs for this MX Record. Add one below</em>
+                </div>
+                <table class="table table-striped" ng-show="sub.properties.MXRecords.length != 0">
+                    <tbody>
+                    <th>Exchange</th>
+                    <th>Preference</th>
+                    <th>&nbsp;</th>
+                    <tr data-ng-repeat="item in sub.properties.MXRecords">
+                        <td>
+                            <p data-ng-hide="item.edit">{{item.exchange}}</p>
+                            <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressItem.exchange" class="form-control" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="item.edit">{{item.preference}}</p>
+                            <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressItem.preference" class="form-control" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="item.edit">
+                                <a data-ng-click="editSwitch(item)" href="javascript:;">Edit</a> |
+                                <a data-ng-click="delete(item,sub.id)" href="javascript:;">Delete</a>
+                            </p>
+                            <p data-ng-show="item.edit">
+                                <a data-ng-click="updateRec(item,sub)" href="javascript:;">Save</a> |
+                                <a data-ng-click="editSwitch(item)" href="javascript:;">Cancel</a>
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div>Add new MX Record</div>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label class="sr-only" for="inputAddExchange">Exchange</label>
+                        <input ng-model="sub.newRecExchange" type="text" class="form-control" id="inputAddExchange" placeholder="Exchange">
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="inputAddPreference">Preference</label>
+                        <input ng-model="sub.newRecPreference" type="text" class="form-control" id="inputAddPreference" placeholder="Preference">
+                    </div>
+                    <button ng-click="updateRec(null,sub);" type="submit" class="btn btn-primary">Add</button>
+                </form>
+
+            </div>
+        </div>
+    </treasure-overlay-spinner>
+    <div>Add new A Record</div>
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-2">
+            <div class="input-group">
+                    <input id="inputAddDomain" ng-model="newRecRootDomain" class="form-control" placeholder="Domain" />
+              
+                <span class="input-group-btn">
+                    <button ng-click="addRec();" type="submit" class="btn btn-primary">Add</button>
+                </span>  
+            </div>
+        </div>
+    </div>
+</div>
