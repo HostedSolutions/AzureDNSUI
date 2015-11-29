@@ -1,5 +1,4 @@
 ﻿<div ng-init="populate()">
-    <h3>A Records</h3>
     <treasure-overlay-spinner active='spinner.active'>
         <div data-ng-repeat="sub in ARecs">
             <div class="col-md-2" style="border-top: solid thin gainsboro">
@@ -30,21 +29,23 @@
                         </tr>
                     </tbody>
                 </table>
-                <div>Add new IP to A Record</div>
-                <div class="input-group" style="padding-bottom: 10px;">
-                    <input ng-model="sub.newARec" class="form-control" />
-                    <span class="input-group-btn">
-                        <button ng-click="updateA(null,sub);" class="btn btn-default">Add</button>
-                    </span>
+                <div class="col-xs-4">
+                    <div class="input-group" style="padding-bottom: 10px;">
+                        <input ng-model="sub.newARec" class="form-control" placeholder="Add new IP to {{sub.name}}"/>
+                        <span class="input-group-btn">
+                            <button ng-click="updateA(null,sub);" class="btn btn-primary">Add</button>
+                        </span>
+                    </div>
+                    </div>
                 </div>
-            </div>
         </div>
     </treasure-overlay-spinner>
-    <div>Add new A Record</div>
-    <div class="input-group">
-        <input ng-model="newARecRoot" class="form-control" />
-        <span class="input-group-btn">
-            <button ng-click="addA();" class="btn btn-default">Add</button>
-        </span>
+    <div class="col-xs-4">
+        <div class="input-group">
+            <input ng-model="newARecRoot" class="form-control" placeholder="Add new A Record" />
+            <span class="input-group-btn">
+                <button ng-click="addA();" class="btn btn-primary">Add</button>
+            </span>
+        </div>
     </div>
 </div>

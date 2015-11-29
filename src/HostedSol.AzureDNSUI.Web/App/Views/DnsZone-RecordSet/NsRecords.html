@@ -1,36 +1,38 @@
 ﻿<div ng-init="populate()">
-    <h3>Name Server Records</h3>
     <treasure-overlay-spinner active='spinner.active'>
         <div data-ng-repeat="sub in NSRecs">
             <table class="table table-striped">
                 <tbody>
-                    <tr data-ng-repeat="item in sub.properties.NSRecords">
-                        <td>
+                <tr data-ng-repeat="item in sub.properties.NSRecords">
+                    <td>
 
-                            <p data-ng-hide="item.edit">{{item.nsdname}}</p>
+                        <p data-ng-hide="item.edit">{{item.nsdname}}</p>
 
-                            <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressNS.nsdname" class="form-control"/>
-                            <input data-ng-show="item.edit" type="hidden" data-ng-model="editInProgressNS.nsdnameOld" class="form-control" />
-                        </td>
-                        <td>
-                            <p data-ng-hide="item.edit">
-                                <a data-ng-click="editSwitchNS(item)" href="javascript:;">Edit</a> |
-                                <a data-ng-click="deleteNS(item.nsdname)" href="javascript:;">Delete</a>
-                            </p>
-                            <p data-ng-show="item.edit">
-                                <a data-ng-click="updateNS()" href="javascript:;">Save</a> |
-                                <a data-ng-click="editSwitchNS(item)" href="javascript:;">Cancel</a>
-                            </p>
-                        </td>
-                    </tr>
+                        <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressNS.nsdname" class="form-control"/>
+                        <input data-ng-show="item.edit" type="hidden" data-ng-model="editInProgressNS.nsdnameOld" class="form-control"/>
+                    </td>
+                    <td>
+                        <p data-ng-hide="item.edit">
+                            <a data-ng-click="editSwitchNS(item)" href="javascript:;">Edit</a> |
+                            <a data-ng-click="deleteNS(item.nsdname)" href="javascript:;">Delete</a>
+                        </p>
+                        <p data-ng-show="item.edit">
+                            <a data-ng-click="updateNS()" href="javascript:;">Save</a> |
+                            <a data-ng-click="editSwitchNS(item)" href="javascript:;">Cancel</a>
+                        </p>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
     </treasure-overlay-spinner>
+
+<div class="col-xs-4">
     <div class="input-group">
-        <input ng-model="newNSRec" class="form-control" />
+        <input ng-model="newNSRec" class="form-control" placeholder="Add new NS Record"/>
         <span class="input-group-btn">
-            <button ng-click="addNS();" class="btn btn-default">Add</button>
-        </span>
+                <button ng-click="addNS();" class="btn btn-primary">Add</button>
+            </span>
     </div>
+</div>
 </div>

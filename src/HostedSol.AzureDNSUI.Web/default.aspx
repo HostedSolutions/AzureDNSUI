@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="App/lib/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="App/lib/angular-treasure-overlay-spinner/dist/treasure-overlay-spinner.min.css" />
+    <link rel="stylesheet" href="Content/Site.css" />
 </head>
 <body ng-app="AzureDNSUI" ng-controller="homeCtrl" role="document">
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">

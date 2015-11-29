@@ -1,5 +1,4 @@
 ﻿<div ng-init="populate()">
-    <h3>MX Records</h3>
     <treasure-overlay-spinner active='spinner.active'>
         <div data-ng-repeat="sub in MXRecs">
             <div class="col-md-2" style="border-top: solid thin gainsboro">
@@ -53,9 +52,8 @@
             </div>
         </div>
     </treasure-overlay-spinner>
-    <div>Add new A Record</div>
-    <div class="row">
-        <div class="col-xs-6 col-xs-offset-2">
+        <div class="col-xs-4">
+            <div>Add new MX Domain</div>
             <div class="input-group">
                     <input id="inputAddDomain" ng-model="newRecRootDomain" class="form-control" placeholder="Domain" />
               
@@ -63,6 +61,5 @@
                     <button ng-click="addRec();" type="submit" class="btn btn-primary">Add</button>
                 </span>  
             </div>
-        </div>
     </div>
 </div>

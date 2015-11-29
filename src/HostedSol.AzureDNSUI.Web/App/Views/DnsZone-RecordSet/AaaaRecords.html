@@ -1,5 +1,4 @@
 ﻿<div ng-init="populate()">
-    <h3>AAAA Records</h3>
     <treasure-overlay-spinner active='spinner.active'>
         <div data-ng-repeat="sub in AAAARecs">
             <div class="col-md-2" style="border-top: solid thin gainsboro">
@@ -30,21 +29,23 @@
                         </tr>
                     </tbody>
                 </table>
-                <div>Add new IP to A Record</div>
-                <div class="input-group" style="padding-bottom: 10px;">
-                    <input ng-model="sub.newRec" class="form-control" />
-                    <span class="input-group-btn">
-                        <button ng-click="updateRec(null,sub);" class="btn btn-default">Add</button>
-                    </span>
+                <div class="col-xs-4">
+                    <div class="input-group" style="padding-bottom: 10px;">
+                        <input ng-model="sub.newRec" class="form-control" placeholder="Add new IP to {{sub.name}}"/>
+                        <span class="input-group-btn">
+                            <button ng-click="updateRec(null,sub);" class="btn btn-primary">Add</button>
+                        </span>
+                    </div>
                 </div>
-            </div>
+                </div>
         </div>
-        <div>Add new A Record</div>
+        <div class="col-xs-4">
         <div class="input-group">
-            <input ng-model="newRecRoot" class="form-control" />
+            <input ng-model="newRecRoot" class="form-control" placeholder="Add new AAAA Record"/>
             <span class="input-group-btn">
-                <button ng-click="addRec();" class="btn btn-default">Add</button>
-            </span>
+                    <button ng-click="addRec();" class="btn btn-primary">Add</button>
+                </span>
         </div>
-    </treasure-overlay-spinner>
+            </div>
+</treasure-overlay-spinner>
 </div>

@@ -1,7 +1,6 @@
 ﻿<div ng-init="populate()">
 
     <treasure-overlay-spinner active='spinner.active'>
-        {{dnsZoneSvcID}}
 
         <h3>Start Of Authority Record</h3>
         <div>
@@ -16,14 +15,13 @@
         <div>Retry Time: {{SOARec.retryTime}}</div>
     </treasure-overlay-spinner>
 </div>
-<h2>New options</h2>
 
     <div class="row" style="padding-bottom: 30px;">
-        <div class="col-md-12">
+        
             <tabs data="tabData" type="tabs" vertical="false" justified="false"></tabs>
-        </div>
+        
         <div>
-            <div class="col-md-12">
+            <div class="tab-pane col-xs-12">
                 <ui-view autoscroll></ui-view>
             </div>
         </div>
