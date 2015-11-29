@@ -150,6 +150,7 @@
     <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\cnameRecordsCtrl.js" />
     <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\mxRecordsCtrl.js" />
     <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\nsRecordsCtrl.js" />
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\soaRecordCtrl.js" />
     <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\srvRecordsCtrl.js" />
     <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\txtRecordsCtrl.js" />
     <Content Include="App\Scripts\ctrl\RecordSetCtrl.js" />
@@ -174,6 +175,7 @@
     <Content Include="App\Views\DnsZone-RecordSet\CnameRecords.html" />
     <Content Include="App\Views\DnsZone-RecordSet\MxRecords.html" />
     <Content Include="App\Views\DnsZone-RecordSet\NsRecords.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\SoaRecord.html" />
     <Content Include="App\Views\DnsZone-RecordSet\SrvRecords.html" />
     <Content Include="App\Views\DnsZone-RecordSet\TxtRecords.html" />
     <Content Include="App\Views\DnsZone.html" />

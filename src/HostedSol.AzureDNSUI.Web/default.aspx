@@ -77,6 +77,7 @@
         <script src="App/Scripts/fac/dnsZoneSvc.js"></script>
         <script src="App/Scripts/fac/resourceGroupSvc.js"></script>
         
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/SoaRecordCtrl.js"></script>
         <script src="App/Scripts/ctrl/DnsZone-RecordSet/aRecordsCtrl.js"></script>
         <script src="App/Scripts/ctrl/DnsZone-RecordSet/aaaaRecordsCtrl.js"></script>
         <script src="App/Scripts/ctrl/DnsZone-RecordSet/cnameRecordsCtrl.js"></script>

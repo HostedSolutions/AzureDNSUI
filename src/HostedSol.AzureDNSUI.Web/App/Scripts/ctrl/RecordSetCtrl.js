@@ -3,16 +3,17 @@ angular.module('AzureDNSUI')
 .controller('recordSetCtrl', ['$scope','$state', '$location', '$stateParams', 'recordSetSvc', 'adalAuthenticationService', 'subscriptionsSvc', 'resourceGroupSvc',
                         function ($scope, $state,$location, $stateParams, recordSetSvc, adalService, subscriptionSvc, resourceGroupSvc) {
                             $scope.dnsZoneSvcID = decodeURIComponent($stateParams.id);
-                            $scope.newNSRec = "";
-                            $scope.newARecRoot = "";
-                            $scope.newARec = "";
-                            $scope.editInProgressNS = { nsdname: "" };
-                            $scope.editInProgressA = { ipv4Address: "" };
+                            $scope.dnsZone = "";
                             $scope.editingInProgressNS = false;
                             $scope.isLoading = true;   $scope.go = function(state) {
                                 $state.go(state);
                             };
-
+                            $scope.populate = function() {
+                                // do somthing
+                                var inx = $scope.dnsZoneSvcID.lastIndexOf("/");
+                                var Len =$scope.dnsZoneSvcID.length;
+                                $scope.dnsZone = $scope.dnsZoneSvcID.substr(inx+1, Len-inx);
+                            };
                             $scope.tabData   = [
                               {
                                   heading: 'A Records',
@@ -55,45 +56,15 @@ angular.module('AzureDNSUI')
                                    params: {
                                        Id: $scope.dnsZoneSvcID
                                    }
+                               },
+                               {
+                                   heading: 'SOA Records',
+                                   route: 'RecordSet.soaRecordsCtrl',
+                                   params: {
+                                       Id: $scope.dnsZoneSvcID
+                                   }
                                }
                             ];
                         
                          
-
-                            ///////////////////////////////////// INIT
-                         
-
-                            $scope.populateSRV = function () {
-                                recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                                //SRV
-                                recordSetSvc.getItems('SRV').success(function (results) {
-                                    if (results.value.length != 0) {
-                                        $scope.SRVRecs = results.value[0].properties.SRVRecords;
-                                    }
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                });
-
-                            }
-                            $scope.populate = function () {
-
-                                $scope.spinner = { active: true };
-                                recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                                    //SOA
-                                recordSetSvc.getItems('SOA').success(function (results) {
-                                    if (results.value.length != 0) {
-                                        $scope.SOARec = results.value[0].properties.SOARecord;
-                                    }
-                                    $scope.loadingMessage = "";
-                                    $scope.spinner = { active: false };
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMessage = "";
-                                    $scope.spinner = { active: false };
-                                });
-                            }
                         }]);

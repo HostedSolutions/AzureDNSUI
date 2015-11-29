@@ -54,6 +54,10 @@ angular.module('AzureDNSUI', ['AdalAngular', 'ui.router',
         url: '/RecordSet/txtRecordsCtrl/:id',
         templateUrl: 'App/Views/DnsZone-RecordSet/TxtRecords.html',
         controller: 'DnsZone-RecordSet.txtRecordsCtrl'
+    }).state('RecordSet.soaRecordsCtrl', {
+        url: '/RecordSet/soaRecordsCtrl/:id',
+        templateUrl: 'App/Views/DnsZone-RecordSet/SoaRecord.html',
+        controller: 'DnsZone-RecordSet.soaRecordsCtrl'
     });
 
     adalProvider.init(
