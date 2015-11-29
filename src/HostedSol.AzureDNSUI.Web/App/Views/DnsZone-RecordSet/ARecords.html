@@ -2,7 +2,9 @@
     <h3>A Records</h3>
     <treasure-overlay-spinner active='spinner.active'>
         <div data-ng-repeat="sub in ARecs">
-            <div class="col-md-2"><h4>{{sub.name}}</h4></div>
+            <div class="col-md-2" style="border-top: solid thin gainsboro">
+                <h4>{{sub.name}}</h4>
+            </div>
             <div class="col-md-10">
 
                 <div ng-show="sub.properties.ARecords.length == 0"><em>There are no IPs for this A Record. Add one below</em></div>
@@ -18,7 +20,7 @@
                             <td>
                                 <p data-ng-hide="item.edit">
                                     <a data-ng-click="editSwitchA(item)" href="javascript:;">Edit</a> |
-                                    <a data-ng-click="deleteA(item.ipv4Address)" href="javascript:;">Delete</a>
+                                    <a data-ng-click="delete(item,sub.id)" href="javascript:;">Delete</a>
                                 </p>
                                 <p data-ng-show="item.edit">
                                     <a data-ng-click="updateA(item,sub)" href="javascript:;">Save</a> |
@@ -29,7 +31,7 @@
                     </tbody>
                 </table>
                 <div>Add new IP to A Record</div>
-                <div class="input-group">
+                <div class="input-group" style="padding-bottom: 10px;">
                     <input ng-model="sub.newARec" class="form-control" />
                     <span class="input-group-btn">
                         <button ng-click="updateA(null,sub);" class="btn btn-default">Add</button>
@@ -37,12 +39,12 @@
                 </div>
             </div>
         </div>
-        <div>Add new A Record</div>
-    <div class="input-group">
-        <input ng-model="newARecRoot" class="form-control"/>
-        <span class="input-group-btn">
-                <button ng-click="addA();" class="btn btn-default">Add</button>
-            </span>
-    </div>
     </treasure-overlay-spinner>
+    <div>Add new A Record</div>
+    <div class="input-group">
+        <input ng-model="newARecRoot" class="form-control" />
+        <span class="input-group-btn">
+            <button ng-click="addA();" class="btn btn-default">Add</button>
+        </span>
+    </div>
 </div>

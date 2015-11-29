@@ -2,7 +2,7 @@
     <h3>AAAA Records</h3>
     <treasure-overlay-spinner active='spinner.active'>
         <div data-ng-repeat="sub in AAAARecs">
-            <div class="col-md-2">
+            <div class="col-md-2" style="border-top: solid thin gainsboro">
                 <h4>{{sub.name}}</h4>
             </div>
             <div class="col-md-10">
@@ -14,18 +14,16 @@
                     <tbody>
                         <tr data-ng-repeat="item in sub.properties.AAAARecords">
                             <td>
-
                                 <p data-ng-hide="item.edit">{{item.ipv6Address}}</p>
-
-                                <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressA.ipv6Address" class="form-control" />
+                                <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressItem.ipv6Address" class="form-control" />
                             </td>
                             <td>
                                 <p data-ng-hide="item.edit">
                                     <a data-ng-click="editSwitch(item)" href="javascript:;">Edit</a> |
-                                    <a data-ng-click="delete(item.ipv6Address)" href="javascript:;">Delete</a>
+                                    <a data-ng-click="delete(item,sub.id)" href="javascript:;">Delete</a>
                                 </p>
                                 <p data-ng-show="item.edit">
-                                    <a data-ng-click="update(item,sub)" href="javascript:;">Save</a> |
+                                    <a data-ng-click="updateRec(item,sub)" href="javascript:;">Save</a> |
                                     <a data-ng-click="editSwitch(item)" href="javascript:;">Cancel</a>
                                 </p>
                             </td>
@@ -33,7 +31,7 @@
                     </tbody>
                 </table>
                 <div>Add new IP to A Record</div>
-                <div class="input-group">
+                <div class="input-group" style="padding-bottom: 10px;">
                     <input ng-model="sub.newRec" class="form-control" />
                     <span class="input-group-btn">
                         <button ng-click="updateRec(null,sub);" class="btn btn-default">Add</button>

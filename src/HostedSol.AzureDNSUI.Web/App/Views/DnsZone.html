@@ -30,32 +30,34 @@
                 ng-options="item.id as item.name for item in resourceGroupList">
         </select>
 
-        <table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
-            <tbody>
-            <tr>
-                <td>Domains</td><td></td>
-            </tr>
-            <tr data-ng-repeat="item in dnsZoneList">
-                <td>
-                    <p data-ng-hide="item.edit">{{item.name}}</p>
-                </td>
-                <td>
-                    <p>
-                        <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
-                        <a href="javascript:;">Delete</a>
-                        <!--data-ng-click="delete(item.ID)"-->
-                    </p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
+        <treasure-overlay-spinner active='spinner.active'>
+            <table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
+                <tbody>
+                <tr>
+                    <td>Domains</td>
+                    <td></td>
+                </tr>
+                <tr data-ng-repeat="item in dnsZoneList">
+                    <td>
+                        <p data-ng-hide="item.edit">{{item.name}}</p>
+                    </td>
+                    <td>
+                        <p>
+                            <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
+                            <a href="javascript:;">Delete</a>
+                            <!--data-ng-click="delete(item.ID)"-->
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </treasure-overlay-spinner>
         <div class="input-group" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
-            <input ng-model="newDnsZoneName" class="form-control" />
-            <span class="input-group-btn">
-                <button ng-click="add();" class="btn btn-default">Add</button>
-            </span>
-        </div>
+                <input ng-model="newDnsZoneName" class="form-control" />
+                <span class="input-group-btn">
+                    <button ng-click="add();" class="btn btn-default">Add</button>
+                </span>
+            </div>
 
-    </div>
+</div>
 </div>

@@ -134,9 +134,6 @@ angular.module('AzureDNSUI')
             o.tags = new Object();
             o.properties = new Object();
             o.properties.TTL = 300;
-            //var ARecord = new Object();
-            //ARecord.ipv4Address = ipv4Address;
-            //o.properties.ARecords = [ipv4Address];
             o.properties.ARecords = new Object();
             return $http.put(this.CallURL() + '/A/' + hostName + '?api-version=2015-05-04-preview', o);
         },
@@ -147,16 +144,12 @@ angular.module('AzureDNSUI')
             o.tags = new Object();
             o.properties = new Object();
             o.properties.TTL = 300;
-            //var dARecords = Array();
-            //for (x = 0; x < ipv4Addresses.length; x++)
-            //{
-            //    var ARecord = new Object();
-            //    ARecord.ipv4Address = ipv4Addresses;
-            //    dARecords[x]=ARecord;
-            //}
             o.properties.ARecords = aRecords;
             
             return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
+        },
+        deleteA: function () {
+            return $http.delete(this.CallURL() + '?api-version=2015-05-04-preview');
         },
         /*
 NS
@@ -176,18 +169,7 @@ NS
  }
 }
         */
-        addNS: function (hostName, nsdname) {
-            var o = new Object();
-            o.location = 'global';
-            o.tags = new Object();
-            o.properties = new Object();
-            o.properties.TTL = 300;
-            var NSRecord = new Object();
-            NSRecord.nsdname = nsdname;
-            o.properties.NSRecords = [nsdname];
-
-            return $http.put(this.CallURL() + '/' + hostName + '?api-version=2015-05-04-preview', o);
-        },
+     
         updateNS: function (nsdname) {
 
             var o = new Object();
@@ -195,9 +177,7 @@ NS
             o.tags = new Object();
             o.properties = new Object();
             o.properties.TTL = 300;
-            var NSRecord = new Object();
-            NSRecord.nsdname = nsdname;
-            o.properties.NSRecords = [nsdname];
+            o.properties.NSRecords = nsdname;
 
             return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
         },
@@ -238,6 +218,9 @@ AAAA
 }
 */
 
+        deleteAAAA: function () {
+            return $http.delete(this.CallURL() + '?api-version=2015-05-04-preview');
+        },
         addAAAA: function (hostName) {
             var o = new Object();
             o.location = 'global';
@@ -270,6 +253,32 @@ CNAME
     }
  }
 }
+*/
+
+        addCNAME: function (hostName, cnameRecord) {
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            o.properties.CNAMERecord = cnameRecord;
+            return $http.put(this.CallURL() + '/CNAME/' + hostName + '?api-version=2015-05-04-preview', o);
+        },
+        updateCNAME: function (cnameRecord) {
+
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            o.properties.CNAMERecord = cnameRecord;
+
+            return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
+        },
+        deleteCNAME: function (hostName) {
+            return $http.delete(this.CallURL() + '/CNAME/' + hostName + '?api-version=2015-05-04-preview');
+        },
+        /*
 MX
 {
  "location": "global",

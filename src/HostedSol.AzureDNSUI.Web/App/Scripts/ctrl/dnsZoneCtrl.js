@@ -4,7 +4,8 @@ angular.module('AzureDNSUI')
                         function ($scope, $location, dnsZoneSvc, adalService, subscriptionSvc, resourceGroupSvc) {
     $scope.error = "";
     $scope.loadingMessage = "Loading...";
-    $scope.isLoading = true;
+
+    $scope.spinner = { active: true };
     $scope.todoList = null;
     $scope.editingInProgress = false;
     $scope.dnsZoneName = "";
@@ -21,11 +22,13 @@ angular.module('AzureDNSUI')
             $scope.subList = results.value;
             $scope.loadingMessage = "";
             $scope.isLoading = false;
+            $scope.spinner = { active: false };
         }).error(function (err) {
             $scope.error = err;
             $scope.loadingMessage = "";
             $scope.isLoading = false;
-        })
+            $scope.spinner = { active: false };
+        });
     };
                             ////////////////////////////////////
     $scope.changeSubscription = function (item) {
@@ -36,53 +39,53 @@ angular.module('AzureDNSUI')
             for (i = 0; i < providers.length; i++) {
                var provider = providers[i];
                 if (provider.namespace == 'Microsoft.Network') {
-                    console.log('found him')
+                    console.log('found him');
                     if (provider.registrationState == 'NotRegistered') {
-                        console.log('Resource provider not registered, registering now.')
-                        subscriptionSvc.setResourceProvider(item, 'Microsoft.Network')
+                        console.log('Resource provider not registered, registering now.');
+                        subscriptionSvc.setResourceProvider(item, 'Microsoft.Network');
                     }
                 }
             }
         }).error(function (err) {
             $scope.error = err;
             $scope.loadingMessage = "";
-        })
-        
-            resourceGroupSvc.getItems().success(function (results) {
+        });
+        resourceGroupSvc.getItems().success(function (results) {
                 $scope.resourceGroupList = results.value;
                 
             $scope.loadingMessage = "";
         }).error(function (err) {
             $scope.error = err;
             $scope.loadingMessage = "";
-        })
+        });
         $scope.isSubscriptionNotSelected = false;
-    }
+    };
                             ////////////////////////////////////
     $scope.changeResourceGroup = function (item) {
         dnsZoneSvc.resourceGroupName = item;
         $scope.RefreshZones();
-    }
-    $scope.RefreshZones = function () {
-        $scope.isLoading = true;
+    };
+                            $scope.RefreshZones = function () {
+        $scope.spinner = { active: true };
         dnsZoneSvc.getItems().success(function(results) {
             $scope.dnsZoneList = results.value;
             $scope.loadingMessage = "";
-            $scope.isLoading = false;
+            $scope.spinner = { active: false };
         }).error(function(err) {
             $scope.error = err;
             $scope.loadingMessage = "";
-            $scope.isLoading = false;
+            $scope.spinner = { active: false };
         });
         $scope.isResourceGroupNotSelected = false;
-    }
-                            
-    $scope.add = function () {
+    };
+                            $scope.add = function () {
         if($scope.newDnsZoneName == '') {
             alert('please enter a value for the new zone.');
             return;
         }
+        $scope.spinner = { active: true };
         dnsZoneSvc.putItem($scope.newDnsZoneName);
         $scope.RefreshZones();
-    }
-}]);
+        $scope.spinner = { active: false };
+    };
+                        }]);

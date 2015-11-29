@@ -46,39 +46,6 @@ angular.module('AzureDNSUI')
                         
                          
 
-
-                            ////////////////////////////////////// NS RECORDS
-                            $scope.addNS = function () {
-                                recordSetSvc.addNS($scope.newTodoCaption).success(function (results) {
-                                    $scope.loadingMsg = "";
-                                    $scope.newTodoCaption = "";
-                                    $scope.populate();
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMsg = "";
-                                })
-                            };
-
-                            $scope.updateNS = function (NSRec) {
-                                recordSetSvc.updateNS($scope.editInProgressNS).success(function (results) {
-                                    $scope.loadingMsg = "";
-                                    $scope.populate();
-                                    $scope.editSwitch(NSRec);
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMessage = "";
-                                })
-                            };
-
-                            $scope.editSwitchNS = function (NSRec) {
-                                NSRec.edit = !NSRec.edit;
-                                if (NSRec.edit) {
-                                    $scope.editInProgressNS.nsdname = NSRec.nsdname;
-                                    $scope.editingInProgressNS = true;
-                                } else {
-                                    $scope.editingInProgressNS = false;
-                                }
-                            };
                             ///////////////////////////////////// INIT
                          
                             
@@ -116,21 +83,6 @@ angular.module('AzureDNSUI')
 
                             }
 
-                            $scope.populateNS = function () {
-                                recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                                //NS
-                                recordSetSvc.getItems('NS').success(function (results) {
-                                    if (results.value.length != 0) {
-                                        $scope.NSRecs = results.value;//[0].properties.NSRecords
-                                    }
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                });
-                            }
 
                             $scope.populateTXT = function () {
                                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
