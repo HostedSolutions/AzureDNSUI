@@ -1,10 +1,51 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-	<meta charset="utf-8" />
-</head>
-<body>
+﻿<div ng-init="populate()">
+    <h3>TXT Records</h3>
+    <treasure-overlay-spinner active='spinner.active'>
 
-</body>
-</html>
+        <div class="col-md-12">
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>TXT Record</th>
+                        <th>TXT Value</th>
+                        <th></th>
+                    </tr>
+                    <tr data-ng-repeat="sub in TXTRecs">
+                        <td>{{sub.name}}</td>
+                        <td>
+                            <p data-ng-hide="sub.edit">{{sub.value}}</p>
+
+                            <input data-ng-show="sub.edit" type="text" data-ng-model="editInProgressItem.value" class="form-control" />
+                        </td>
+                        <td>
+                            <p data-ng-hide="sub.edit">
+                                <a data-ng-click="editSwitch(sub)" href="javascript:;">Edit</a> |
+                                <a data-ng-click="delete(sub.name)" href="javascript:;">Delete</a>
+                            </p>
+                            <p data-ng-show="sub.edit">
+                                <a data-ng-click="update(sub)" href="javascript:;">Save</a> |
+                                <a data-ng-click="editSwitch(sub)" href="javascript:;">Cancel</a>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="col-xs-8 col-xs-offset-2">
+                <div>Add new TXT Record</div>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input id="TXTNewName" ng-model="sub.newRecTXT" class="form-control" placeholder="TXT Name" />
+                    </div>
+                    <div class="form-group">
+                        <input id="TXTNewVale" ng-model="sub.newRecValue" class="form-control" placeholder="TXT Value" />
+                    </div>
+                    <button ng-click="addRec(sub);" type="submit" class="btn btn-primary">Add</button>
+
+                </form>
+            </div>
+        </div>
+
+    </treasure-overlay-spinner>
+</div>

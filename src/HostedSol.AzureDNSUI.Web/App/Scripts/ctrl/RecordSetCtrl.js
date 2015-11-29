@@ -48,6 +48,13 @@ angular.module('AzureDNSUI')
                                    params: {
                                        Id: $scope.dnsZoneSvcID
                                    }
+                               },
+                               {
+                                   heading: 'TXT Records',
+                                   route: 'RecordSet.txtRecordsCtrl',
+                                   params: {
+                                       Id: $scope.dnsZoneSvcID
+                                   }
                                }
                             ];
                         
@@ -55,57 +62,6 @@ angular.module('AzureDNSUI')
 
                             ///////////////////////////////////// INIT
                          
-                            
-
-                            $scope.populateCNAME = function () {
-                                recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                                //CNAME
-                                recordSetSvc.getItems('CNAME').success(function (results) {
-                                    if (results.value.length != 0) {
-                                        $scope.CNAMERecs = results.value[0].properties.CNAMERecords;
-                                    }
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                });
-                            }
-
-                            $scope.populateMX = function () {
-                                recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                                //MX
-                                recordSetSvc.getItems('MX').success(function (results) {
-                                    if (results.value.length != 0) {
-                                        $scope.MXRecs = results.value[0].properties.MXRecords;
-                                    }
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                });
-
-                            }
-
-
-                            $scope.populateTXT = function () {
-                                recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                                //TXT
-                                recordSetSvc.getItems('TXT').success(function (results) {
-                                    if (results.value.length != 0) {
-                                        $scope.TXTRecs = results.value[0].properties.TXTRecords;
-                                    }
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                }).error(function (err) {
-                                    $scope.error = err;
-                                    $scope.loadingMessage = "";
-                                    $scope.isLoading = false;
-                                });
-                            }
 
                             $scope.populateSRV = function () {
                                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;

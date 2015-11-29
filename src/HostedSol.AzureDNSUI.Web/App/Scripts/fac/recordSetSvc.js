@@ -279,6 +279,50 @@ CNAME
             return $http.delete(this.CallURL() + '/CNAME/' + hostName + '?api-version=2015-05-04-preview');
         },
         /*
+        
+TXT
+{
+ "location": "global",
+ "tags": {},
+ "properties": {
+    "TTL": 300,
+    "TXTRecords": [
+        {
+           "value": "The quick brown fox jumps over the lazy dog.”
+        },
+        {
+           "value": "One two three four five.”
+        }
+    ]
+ }
+}
+        */
+        addTXT: function (hostName, txtRecord) {
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            o.properties.TXTRecords = Array();
+            o.properties.TXTRecords[0] = txtRecord;
+            return $http.put(this.CallURL() + '/TXT/' + hostName + '?api-version=2015-05-04-preview', o);
+        },
+        updateTXT: function (txtRecord) {
+
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            o.properties.TXTRecords = Array();
+            o.properties.TXTRecords[0] = txtRecord;
+
+            return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
+        },
+        deleteTXT: function (hostName) {
+            return $http.delete(this.CallURL() + '/TXT/' + hostName + '?api-version=2015-05-04-preview');
+        },
+        /*
 MX
 {
  "location": "global",
@@ -348,22 +392,6 @@ SRV
 
 
 Note: The ‘Service’ and ‘Protocol’ should be specified as part of the record name, including leading underscores
-TXT
-{
- "location": "global",
- "tags": {},
- "properties": {
-    "TTL": 300,
-    "TXTRecords": [
-        {
-           "value": "The quick brown fox jumps over the lazy dog.”
-        },
-        {
-           "value": "One two three four five.”
-        }
-    ]
- }
-}
 https://msdn.microsoft.com/en-us/library/azure/mt130640.aspx
 */
         deleteItem: function (id) {
