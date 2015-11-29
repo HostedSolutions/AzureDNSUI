@@ -145,6 +145,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\aaaaRecordsCtrl.js" />
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\aRecordsCtrl.js" />
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\cnameRecordsCtrl.js" />
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\mxRecordsCtrl.js" />
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\nsRecordsCtrl.js" />
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\srvRecordsCtrl.js" />
+    <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\txtRecordsCtrl.js" />
     <Content Include="App\Scripts\ctrl\RecordSetCtrl.js" />
     <Content Include="App\Scripts\lib\adal-angular.js" />
     <Content Include="App\Scripts\lib\adal.js" />
@@ -159,11 +166,18 @@
     <Content Include="App\Scripts\ctrl\todoListCtrl.js" />
     <Content Include="App\Scripts\fac\todoListSvc.js" />
     <Content Include="App\Scripts\ctrl\userDataCtrl.js" />
+    <Content Include="App\Scripts\lib\ui-router-tabs.js" />
     <Content Include="App\Scripts\mod\DnsZoneRecords.js" />
     <Content Include="App\Views\DnsZone-RecordSet.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\AaaaRecords.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\ARecords.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\CnameRecords.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\MxRecords.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\NsRecords.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\SrvRecords.html" />
+    <Content Include="App\Views\DnsZone-RecordSet\TxtRecords.html" />
     <Content Include="App\Views\DnsZone.html" />
     <Content Include="App\Views\Home.html" />
-    <Content Include="App\Views\TodoList.html" />
     <Content Include="App\Views\UserData.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -171,9 +185,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="default.aspx" />
+    <Content Include="gulpfile.js" />
     <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="package.json" />
+    <Content Include=".bowerrc" />
+    <Content Include="bower.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

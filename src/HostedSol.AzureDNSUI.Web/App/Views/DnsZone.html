@@ -18,7 +18,7 @@
 </div>    
         -->
      
-
+        <div class="loader" data-loading></div>
         <select id="AzureSubscription" data-ng-hide="isLoading"
                 ng-change="changeSubscription(subListSelected)" 
                 ng-model="subListSelected"
@@ -31,19 +31,22 @@
         </select>
 
         <table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
-         <tbody>
-              <tr data-ng-repeat="item in dnsZoneList">
-                    <td>
-                        <p data-ng-hide="item.edit">{{item.name}}</p>
-                    </td>
-                    <td>
-                        <p>
-                            <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
-                            <a  href="javascript:;">Delete</a>
-                            <!--data-ng-click="delete(item.ID)"-->
-                        </p>
-                    </td>
-                </tr>
+            <tbody>
+            <tr>
+                <td>Domains</td><td></td>
+            </tr>
+            <tr data-ng-repeat="item in dnsZoneList">
+                <td>
+                    <p data-ng-hide="item.edit">{{item.name}}</p>
+                </td>
+                <td>
+                    <p>
+                        <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
+                        <a href="javascript:;">Delete</a>
+                        <!--data-ng-click="delete(item.ID)"-->
+                    </p>
+                </td>
+            </tr>
             </tbody>
         </table>
 

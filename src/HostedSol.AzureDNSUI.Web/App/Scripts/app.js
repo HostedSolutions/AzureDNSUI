@@ -5,7 +5,11 @@ angular.module('exceptionOverride', []).factory('$exceptionHandler', function ()
         throw exception;
     };
 });
-angular.module('AzureDNSUI', ['AdalAngular','ui.router'])
+angular.module('AzureDNSUI', ['AdalAngular', 'ui.router',
+  'ui.bootstrap',
+  'ui.router.tabs',
+'treasure-overlay-spinner',
+'ngAnimate'])
 .config(['$urlRouterProvider', '$httpProvider', '$stateProvider', 'adalAuthenticationServiceProvider', function ($routeProvider, $httpProvider, $stateProvider, adalProvider) {
 
     $routeProvider.otherwise("/Home");
@@ -13,11 +17,11 @@ angular.module('AzureDNSUI', ['AdalAngular','ui.router'])
     $stateProvider.state("Home", {
         url:"/Home",
         controller: "homeCtrl",
-        templateUrl: "App/Views/Home.html",
+        templateUrl: "App/Views/Home.html"
     }).state("UserData", {
         url:"/UserData",
         controller: "userDataCtrl",
-        templateUrl: "App/Views/UserData.html",
+        templateUrl: "App/Views/UserData.html"
     }).state('DnsZone', {
            url: '/DnsZone',
            templateUrl: 'App/Views/DnsZone.html',
@@ -26,7 +30,23 @@ angular.module('AzureDNSUI', ['AdalAngular','ui.router'])
            url: '/RecordSet/:id',
            templateUrl: 'App/Views/DnsZone-RecordSet.html',
            controller: 'recordSetCtrl'
-       });
+    }).state('RecordSet.aRecordsCtrl', {
+        url: '/RecordSet/aRecordsCtrl/:id',
+        templateUrl: 'App/Views/DnsZone-RecordSet/ARecords.html',
+        controller: 'DnsZone-RecordSet.aRecordsCtrl'
+    }).state('RecordSet.cnameRecordsCtrl', {
+        url: '/RecordSet/cnameRecordsCtrl/:id',
+        templateUrl: 'App/Views/DnsZone-RecordSet/CnameRecords.html',
+        controller: 'DnsZone-RecordSet.cnameRecordsCtrl'
+    }).state('RecordSet.aaaaRecordsCtrl', {
+        url: '/RecordSet/aaaaRecordsCtrl/:id',
+        templateUrl: 'App/Views/DnsZone-RecordSet/AaaaRecords.html',
+        controller: 'DnsZone-RecordSet.aaaaRecordsCtrl'
+    }).state('RecordSet.nsRecordsCtrl', {
+        url: '/RecordSet/nsRecordsCtrl/:id',
+        templateUrl: 'App/Views/DnsZone-RecordSet/NsRecords.html',
+        controller: 'DnsZone-RecordSet.nsRecordsCtrl'
+    });
 
     adalProvider.init(
         {

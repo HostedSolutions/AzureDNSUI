@@ -4,6 +4,8 @@
     <title>Todo List: a SPA sample demonstrating Azure AD and ADAL JS</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="App/lib/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" href="App/lib/angular-treasure-overlay-spinner/dist/treasure-overlay-spinner.min.css" />
 </head>
 <body ng-app="AzureDNSUI" ng-controller="homeCtrl" role="document">
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -50,12 +52,21 @@
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-        <script src="Scripts/angular-ui-router.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        
+        <script src="App/lib/angular/angular.min.js"></script>
+        
+        <script src="App/Scripts/app.js"></script>
+
         <script src="App/Scripts/lib/adal.js"></script>
         <script src="App/Scripts/lib/adal-angular.js"></script>
-        <script src="App/Scripts/app.js"></script>
+        <script src="App/lib/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="App/lib/angular-ui-router-tabs/src/ui-router-tabs.js"></script>
+        <script src="App/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="App/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="App/lib/angular-treasure-overlay-spinner/dist/treasure-overlay-spinner.min.js"></script>
+        <script src="App/lib/angular-animate/angular-animate.min.js"></script>
+        
+        
         <script src="App/Scripts/ctrl/homeCtrl.js"></script>
         <script src="App/Scripts/ctrl/userDataCtrl.js"></script>
         <script src="App/Scripts/fac/subscriptionsSvc.js"></script>
@@ -65,5 +76,14 @@
         <script src="App/Scripts/fac/dnsZoneSvc.js"></script>
         <script src="App/Scripts/fac/resourceGroupSvc.js"></script>
         
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/aRecordsCtrl.js"></script>
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/aaaaRecordsCtrl.js"></script>
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/cnameRecordsCtrl.js"></script>
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/nsRecordsCtrl.js"></script>
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/srvRecordsCtrl.js"></script>
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/txtRecordsCtrl.js"></script>
+        <script src="App/Scripts/ctrl/DnsZone-RecordSet/mxRecordsCtrl.js"></script>
+        
+
 </body>
 </html>

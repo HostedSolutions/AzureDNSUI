@@ -1,0 +1,52 @@
+﻿<div ng-init="populate()">
+    <h3>AAAA Records</h3>
+    <treasure-overlay-spinner active='spinner.active'>
+        <div data-ng-repeat="sub in AAAARecs">
+            <div class="col-md-2">
+                <h4>{{sub.name}}</h4>
+            </div>
+            <div class="col-md-10">
+
+                <div ng-show="sub.properties.AAAARecords.length == 0">
+                    <em>There are no IPs for this AAAA Record. Add one below</em>
+                </div>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr data-ng-repeat="item in sub.properties.AAAARecords">
+                            <td>
+
+                                <p data-ng-hide="item.edit">{{item.ipv6Address}}</p>
+
+                                <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressA.ipv6Address" class="form-control" />
+                            </td>
+                            <td>
+                                <p data-ng-hide="item.edit">
+                                    <a data-ng-click="editSwitch(item)" href="javascript:;">Edit</a> |
+                                    <a data-ng-click="delete(item.ipv6Address)" href="javascript:;">Delete</a>
+                                </p>
+                                <p data-ng-show="item.edit">
+                                    <a data-ng-click="update(item,sub)" href="javascript:;">Save</a> |
+                                    <a data-ng-click="editSwitch(item)" href="javascript:;">Cancel</a>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>Add new IP to A Record</div>
+                <div class="input-group">
+                    <input ng-model="sub.newRec" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="updateRec(null,sub);" class="btn btn-default">Add</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div>Add new A Record</div>
+        <div class="input-group">
+            <input ng-model="newRecRoot" class="form-control" />
+            <span class="input-group-btn">
+                <button ng-click="addRec();" class="btn btn-default">Add</button>
+            </span>
+        </div>
+    </treasure-overlay-spinner>
+</div>

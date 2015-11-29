@@ -64,20 +64,22 @@ angular.module('AzureDNSUI')
         $scope.RefreshZones();
     }
     $scope.RefreshZones = function () {
-        dnsZoneSvc.getItems().success(function (results) {
+        $scope.isLoading = true;
+        dnsZoneSvc.getItems().success(function(results) {
             $scope.dnsZoneList = results.value;
             $scope.loadingMessage = "";
-        }).error(function (err) {
+            $scope.isLoading = false;
+        }).error(function(err) {
             $scope.error = err;
             $scope.loadingMessage = "";
-        })
+            $scope.isLoading = false;
+        });
         $scope.isResourceGroupNotSelected = false;
     }
                             
     $scope.add = function () {
-        if($scope.newDnsZoneName == '')
-        {
-            alert('please enter a value for the new zone.')
+        if($scope.newDnsZoneName == '') {
+            alert('please enter a value for the new zone.');
             return;
         }
         dnsZoneSvc.putItem($scope.newDnsZoneName);

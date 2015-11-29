@@ -236,6 +236,29 @@ AAAA
     ]
  }
 }
+*/
+
+        addAAAA: function (hostName) {
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            o.properties.AAAARecords = new Object();
+            return $http.put(this.CallURL() + '/AAAA/' + hostName + '?api-version=2015-05-04-preview', o);
+        },
+        updateAAAA: function (aaaaRecords) {
+
+            var o = new Object();
+            o.location = 'global';
+            o.tags = new Object();
+            o.properties = new Object();
+            o.properties.TTL = 300;
+            o.properties.AAAARecords = aaaaRecords;
+
+            return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
+        },
+        /*
 CNAME
 {
  "location": "global",
