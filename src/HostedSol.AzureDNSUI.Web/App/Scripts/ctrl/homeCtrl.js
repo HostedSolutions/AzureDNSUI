@@ -10,4 +10,5 @@ angular.module('AzureDNSUI')
     $scope.isActive = function (viewLocation) {        
         return viewLocation === $location.path();
     };
-}]);
+        throw 'my error';
+    }]);

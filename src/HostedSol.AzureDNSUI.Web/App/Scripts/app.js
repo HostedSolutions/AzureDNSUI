@@ -1,10 +1,4 @@
 ﻿'use strict';
-angular.module('exceptionOverride', []).factory('$exceptionHandler', function () {
-    return function (exception, cause) {
-        exception.message += ' (caused by "' + cause + '")';
-        throw exception;
-    };
-});
 angular.module('AzureDNSUI', ['AdalAngular', 'ui.router',
   'ui.bootstrap',
   'ui.router.tabs',
@@ -74,5 +68,14 @@ angular.module('AzureDNSUI', ['AdalAngular', 'ui.router',
         $httpProvider
         );
    
-}]);
+}]).factory('$exceptionHandler', function ($injector) {
+    return function (exception, cause) {
+        var $http = $injector.get("$http");
+        var $log = $injector.get("$log");
+        exception.message += ' (caused by "' + cause + '")';
+        $log.log(exception);
+        $http.post('/api/Log/Error', JSON.stringify(exception));
+        throw exception;
+    };
+});
 
