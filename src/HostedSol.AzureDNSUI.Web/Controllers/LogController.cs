@@ -32,21 +32,21 @@ namespace HostedSol.AzureDNSUI.Web.Controllers
         // POST: api/Log/Debug
         public void PostDebug([FromBody]string value)
         {
-            Log.Debug(value);
+            _logger.Debug(value);
         }
         [Route("~/api/Log/Warn")]
         [HttpPost]
         // POST: api/Log/Warn
         public void PostWarn([FromBody]string value)
         {
-            Log.Warning(value);
+            _logger.Warning(value);
         }
         [Route("~/api/Log/Info")]
         [HttpPost]
         // POST: api/Log/Info
         public void PostInfo([FromBody]string value)
         {
-            Log.Information(value);
+            _logger.Information(value);
         }
     }
 }
