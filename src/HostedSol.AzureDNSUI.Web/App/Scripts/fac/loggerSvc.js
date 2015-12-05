@@ -1,18 +1,12 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
-.factory('loggerSvc', ['$http', function ($http) {
-    return {
-        Error: function (data) {
-            return $http.post('/api/Log/Error', data);
-        },
-        Warn: function (data) {
-            return $http.post('/api/Log/Warn', data);
-        },
-        Info: function (data) {
-            return $http.post('/api/Log/Info', data);
-        },
-        Debug: function (data) {
-            return $http.post('/api/Log/Debug', data);
-        }
-    };
-}]);
+    .factory('$exceptionHandler', function($injector) {
+        return function(exception, cause) {
+            var $http = $injector.get("$http");
+            var $log = $injector.get("$log");
+            exception.message += ' (caused by "' + cause + '")';
+            $log.log(exception);
+            $http.post('/api/Log/Error', JSON.stringify(exception));
+            throw exception;
+        };
+    });
