@@ -12,7 +12,8 @@ angular.module('AzureDNSUI')
                                 // do somthing
                                 var inx = $scope.dnsZoneSvcID.lastIndexOf("/");
                                 var Len =$scope.dnsZoneSvcID.length;
-                                $scope.dnsZone = $scope.dnsZoneSvcID.substr(inx+1, Len-inx);
+                                $scope.dnsZone = $scope.dnsZoneSvcID.substr(inx + 1, Len - inx);
+                                $state.go('RecordSet.aRecordsCtrl');
                             };
                             $scope.tabData   = [
                               {

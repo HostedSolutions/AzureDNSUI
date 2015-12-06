@@ -38,13 +38,7 @@
 
     <br />
     <div class="container" role="main">
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1" style="background-color:azure">
-                <div class="page-header">
-                    <h3>Azure DNS UI Zone Editor</h3>
-                </div>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-xs-10 col-xs-offset-1">
                 <div ui-view>

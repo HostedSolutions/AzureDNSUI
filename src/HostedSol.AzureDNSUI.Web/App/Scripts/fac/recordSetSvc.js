@@ -181,6 +181,9 @@ NS
 
             return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
         },
+        deleteNS: function () {
+            return $http.delete(this.CallURL() + '?api-version=2015-05-04-preview');
+        },
         /*
         
 SOA
@@ -394,13 +397,5 @@ SRV
 Note: The ‘Service’ and ‘Protocol’ should be specified as part of the record name, including leading underscores
 https://msdn.microsoft.com/en-us/library/azure/mt130640.aspx
 */
-        deleteItem: function (id) {
-            //DELETE https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}?api-version={api-version}
-            return $http({
-                //DELETE https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{recordSetName}?api-version={api-version}
-                method: 'DELETE',
-                url: '/api/TodoList/' + id
-            });
-        }
     };
 }]);

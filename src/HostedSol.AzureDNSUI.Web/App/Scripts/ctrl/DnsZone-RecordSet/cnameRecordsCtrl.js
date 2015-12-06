@@ -24,7 +24,7 @@ angular.module('AzureDNSUI')
                             $scope.CNAMERecs[x] = { name: results.value[x].name, value: results.value[x].properties.CNAMERecord.cname, id: results.value[x].id };
                         }
                     $scope.loadingMessage = "";
-                    $scope.spinner = { active: false };
+                    //$scope.spinner = { active: false };
                 }).error(function (err) {
                     $scope.error = err;
                     $scope.loadingMessage = "";
@@ -35,11 +35,19 @@ angular.module('AzureDNSUI')
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
                 var newCNAME = { cname: sub.newRecValue };
-                recordSetSvc.addCNAME(sub.newRecName, newCNAME).success(function (results) {
+                recordSetSvc.addCNAME(sub.newRecName, newCNAME).then(function () {
                     $scope.populate();
-                }).error(function (err) {
-                    $scope.error = err;
                     $scope.spinner = { active: false };
+                }, function (err) {
+                    console.log(err);
+                    $scope.spinner = { active: false };
+                    if (err.status === 409) {
+                        // conflict error
+                        alert('The record you tried to add maybe a duplicate with an existing A Record, the API returned a 409 Conflict error. Please check the data and try again.');
+                        return;
+                    }
+                    //$scope.error = err;
+                    sub.newRecValue = '';
                 });
             };
             $scope.GetRec = function (id) {
@@ -51,7 +59,7 @@ angular.module('AzureDNSUI')
 
             $scope.update = function (sub) {
                 $scope.spinner = { active: true };
-                var param = Object();
+                var param = new Object();
                 param = { cname: $scope.editInProgressItem.cname };
                 recordSetSvc.recordSet = sub.id;
                 recordSetSvc.updateCNAME(param).success(function (results) {
