@@ -109,3 +109,4 @@ UpgradeLog*.XML
 
 #location for downloaded Bower Pacakges
 App/lib/
+node_modules

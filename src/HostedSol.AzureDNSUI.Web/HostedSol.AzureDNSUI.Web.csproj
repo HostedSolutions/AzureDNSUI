@@ -197,14 +197,10 @@
     <Content Include="App\Scripts\fac\recordSetSvc.js" />
     <Content Include="App\Scripts\fac\dnsZoneSvc.js" />
     <Content Include="App\Scripts\ctrl\homeCtrl.js" />
-    <Content Include="App\Scripts\ctrl\indexCtrl.js" />
     <Content Include="App\Scripts\fac\resourceGroupSvc.js" />
     <Content Include="App\Scripts\fac\subscriptionsSvc.js" />
     <Content Include="App\Scripts\ctrl\dnsZoneCtrl.js" />
-    <Content Include="App\Scripts\ctrl\todoListCtrl.js" />
-    <Content Include="App\Scripts\fac\todoListSvc.js" />
     <Content Include="App\Scripts\ctrl\userDataCtrl.js" />
-    <Content Include="App\Scripts\mod\DnsZoneRecords.js" />
     <Content Include="App\Views\DnsZone-RecordSet.html" />
     <Content Include="App\Views\DnsZone-RecordSet\AaaaRecords.html" />
     <Content Include="App\Views\DnsZone-RecordSet\ARecords.html" />
@@ -222,21 +218,9 @@
     <Content Include="Global.asax" />
     <Content Include="default.aspx" />
     <Content Include="gulpfile.js" />
-    <Content Include="Scripts\angular-ui-router.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="package.json" />
     <Content Include=".bowerrc" />
     <Content Include="bower.json" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -264,7 +248,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
