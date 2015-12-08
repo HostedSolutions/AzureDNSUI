@@ -17,14 +17,18 @@ angular.module('AzureDNSUI')
             $scope.populate = function () {
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                //AAAA
                 recordSetSvc.getItems('CNAME').success(function (results) {
                         $scope.CNAMERecs = Array();
                         for (var x = 0; x < results.value.length; x++) {
-                            $scope.CNAMERecs[x] = { name: results.value[x].name, value: results.value[x].properties.CNAMERecord.cname, id: results.value[x].id };
+                            $scope.CNAMERecs[x] = {
+                                name: results.value[x].name,
+                                value: results.value[x].properties.CNAMERecord.cname,
+                                id: results.value[x].id,
+                                TTL: results.value[x].properties.TTL
+                            };
                         }
                     $scope.loadingMessage = "";
-                    //$scope.spinner = { active: false };
+                    $scope.spinner = { active: false };
                 }).error(function (err) {
                     $scope.error = err;
                     $scope.loadingMessage = "";
@@ -35,7 +39,7 @@ angular.module('AzureDNSUI')
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
                 var newCNAME = { cname: sub.newRecValue };
-                recordSetSvc.addCNAME(sub.newRecName, newCNAME).then(function () {
+                recordSetSvc.addCNAME(sub.newRecName, newCNAME,sub.newRecTTL).then(function () {
                     $scope.populate();
                     $scope.spinner = { active: false };
                 }, function (err) {
@@ -62,11 +66,12 @@ angular.module('AzureDNSUI')
                 var param = new Object();
                 param = { cname: $scope.editInProgressItem.cname };
                 recordSetSvc.recordSet = sub.id;
-                recordSetSvc.updateCNAME(param).success(function (results) {
+                recordSetSvc.updateCNAME(param, $scope.editInProgressItem.TTL).success(function (results) {
                     $scope.loadingMsg = "";
                     $scope.populate();
                     $scope.editSwitch(sub);
                 }).error(function (err) {
+                    $scope.spinner = { active: false };
                     $scope.error = err;
                     $scope.loadingMessage = "";
                 });
@@ -77,6 +82,7 @@ angular.module('AzureDNSUI')
                 sub.edit = !sub.edit;
                 if (sub.edit) {
                     $scope.editInProgressItem.cname = sub.value;
+                    $scope.editInProgressItem.TTL = sub.TTL;
                     $scope.editingInProgress = true;
                     $scope.spinner = { active: false };
                 } else {

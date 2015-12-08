@@ -258,22 +258,22 @@ CNAME
 }
 */
 
-        addCNAME: function (hostName, cnameRecord) {
+        addCNAME: function (hostName, cnameRecord,TTL) {
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
+            o.properties.TTL = TTL;
             o.properties.CNAMERecord = cnameRecord;
             return $http.put(this.CallURL() + '/CNAME/' + hostName + '?api-version=2015-05-04-preview', o);
         },
-        updateCNAME: function (cnameRecord) {
+        updateCNAME: function (cnameRecord, TTL) {
 
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
+            o.properties.TTL = TTL;
             o.properties.CNAMERecord = cnameRecord;
 
             return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);

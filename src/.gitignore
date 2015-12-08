@@ -109,4 +109,6 @@ UpgradeLog*.XML
 
 #location for downloaded Bower Pacakges
 App/lib/
+scripts.min.js
+lib.min.js
 node_modules

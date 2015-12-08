@@ -46,9 +46,12 @@
                 </div>
             </div>
         </div>
+
+    </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
       <script src="App/lib.min.js"></script>     
         <script src="App/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
         <script src="App/scripts.min.js"></script>
+      
 </body>
 </html>

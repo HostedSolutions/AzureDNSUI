@@ -6,13 +6,17 @@
                 <table class="table table-striped">
                     <tbody>
                     <tr>
-                        <th>CName Record</th>
-                        <th>CName Value</th>
+                        <th> Record</th>
+                        <th> TTL</th>
+                        <th> Value</th>
                         <th></th>
                     </tr>
                     <tr data-ng-repeat="sub in CNAMERecs">
                         <!--sub.properties.AAAARecords-->
                         <td>{{sub.name}}</td>
+                        <td>
+                            <p data-ng-hide="sub.edit">{{sub.TTL}}</p>
+                    <input data-ng-show="sub.edit" type="text" data-ng-model="editInProgressItem.TTL" class="form-control" /></td>
                         <td>
                             <p data-ng-hide="sub.edit">{{sub.value}}</p>
 
@@ -36,10 +40,13 @@
                     <div>Add new CNAME Record</div>
                     <form class="form-inline">
                         <div class="form-group">
-                            <input id="CNAMENewName" ng-model="sub.newRecName" class="form-control" placeholder="CNAME Name"/>
+                            <input id="CNAMENewName" ng-model="sub.newRecName" class="form-control" placeholder="Name"/>
                         </div>
                         <div class="form-group">
-                            <input id="CNAMENewVale" ng-model="sub.newRecValue" class="form-control" placeholder="CNAME Value"/>
+                            <input id="CNAMENewVale" ng-model="sub.newRecValue" class="form-control" placeholder="Value"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="CNAMENewTTL" ng-model="sub.newRecTTL" class="form-control" placeholder="TTL" />
                         </div>
                         <button ng-click="addRec(sub);" type="submit" class="btn btn-primary">Add</button>
 
