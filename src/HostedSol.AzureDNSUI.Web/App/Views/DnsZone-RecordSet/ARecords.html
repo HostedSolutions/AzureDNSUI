@@ -1,51 +1,74 @@
 ﻿<div ng-init="populate()">
     <treasure-overlay-spinner active='spinner.active'>
+        <div ng-show="error != null" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error</strong> {{error}}        </div>
         <div data-ng-repeat="sub in ARecs">
             <div class="col-md-2" style="border-top: solid thin gainsboro">
-                <h4>{{sub.name}}</h4>
+                {{sub.name}}
+                <a data-ng-click="editSwitchPanel(sub)" href="javascript:;">
+                    <img src="{{sub.imgEdit}}"
+                         style="float: right; width: 24px; height: 24px; margin-top: 5px;"/>
+                </a>
             </div>
             <div class="col-md-10">
 
-                <div ng-show="sub.properties.ARecords.length == 0"><em>There are no IPs for this A Record. Add one below</em></div>
+                <div ng-show="sub.properties.ARecords.length == 0"><em>There are no IPs for this A Record. Add one below</em>
+                </div>
                 <table class="table table-striped">
                     <tbody>
-                        <tr data-ng-repeat="item in sub.properties.ARecords">
-                            <td>
+                    <tr data-ng-repeat="item in sub.properties.ARecords">
+                        <td>
 
-                                <p data-ng-hide="item.edit">{{item.ipv4Address}}</p>
-
-                                <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressA.ipv4Address" class="form-control" />
-                            </td>
-                            <td>
-                                <p data-ng-hide="item.edit">
-                                    <a data-ng-click="editSwitchA(item)" href="javascript:;">Edit</a> |
-                                    <a data-ng-click="delete(item,sub.id)" href="javascript:;">Delete</a>
-                                </p>
-                                <p data-ng-show="item.edit">
-                                    <a data-ng-click="updateA(item,sub)" href="javascript:;">Save</a> |
-                                    <a data-ng-click="editSwitchA(item)" href="javascript:;">Cancel</a>
-                                </p>
-                            </td>
-                        </tr>
+                            <p data-ng-hide="item.edit">{{item.ipv4Address}}</p>
+                            <input data-ng-show="item.edit" type="text" data-ng-model="editInProgressItem.ipv4Address" class="form-control"/>
+                        </td>
+                        <td>
+                            <p data-ng-hide="item.edit">
+                                <a data-ng-click="editSwitch(item)" href="javascript:;">Edit</a> |
+                                <a data-ng-click="delete(item,sub.id)" href="javascript:;">Delete</a>
+                            </p>
+                            <p data-ng-show="item.edit">
+                                <a data-ng-click="updateA(item,sub)" href="javascript:;">Save</a> |
+                                <a data-ng-click="editSwitch(item)" href="javascript:;">Cancel</a>
+                            </p>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
-                <div class="col-xs-4">
+                <div class="col-xs-4" data-ng-show="sub.editModeOn">
                     <div class="input-group" style="padding-bottom: 10px;">
                         <input ng-model="sub.newARec" class="form-control" placeholder="Add new IP to {{sub.name}}"/>
                         <span class="input-group-btn">
                             <button ng-click="updateA(null,sub);" class="btn btn-primary">Add</button>
                         </span>
                     </div>
+                </div>
+                <div class="col-xs-4" data-ng-show="sub.editModeOn">
+                    <div class="input-group" style="padding-bottom: 10px;">
+                        <input ng-model="sub.properties.TTL" class="form-control"/>
+                        <span class="input-group-btn">
+                            <button ng-click="updateA(null,sub,true);" class="btn btn-danger">Update TTL</button>
+                        </span>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group">
+                <input ng-model="newARecRoot" class="form-control" placeholder="Add new A Record"/>
+                <span class="input-group-btn">
+                    <button ng-click="addA();" class="btn btn-primary">Add</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group" style="padding-bottom: 10px;">
+                <input ng-model="bulkTTL" id="txtBulkTTL" class="form-control"/>
+                <span class="input-group-btn">
+                    <button ng-click="updateTTLBulk();" class="btn btn-danger">Bulk Update TTLs</button>
+                </span>
+            </div>
         </div>
     </treasure-overlay-spinner>
-    <div class="col-xs-4">
-        <div class="input-group">
-            <input ng-model="newARecRoot" class="form-control" placeholder="Add new A Record" />
-            <span class="input-group-btn">
-                <button ng-click="addA();" class="btn btn-primary">Add</button>
-            </span>
-        </div>
-    </div>
 </div>

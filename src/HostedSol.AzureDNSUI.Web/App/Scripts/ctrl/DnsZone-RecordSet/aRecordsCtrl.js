@@ -1,39 +1,55 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
     .controller('DnsZone-RecordSet.aRecordsCtrl', [
-        '$scope','$state', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
-        function($scope,$state, $location, dnsZoneSvc, adalService, recordSetSvc) {
-            $scope.error = "";
-            $scope.spinner = {active: true};
+        '$scope', '$state', '$location', '$q', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
+        function($scope,$state, $location, $q,dnsZoneSvc, adalService, recordSetSvc) {
+            $scope.error = null;
+            //$scope.spinner = {active: true};
             $scope.todoList = null;
             $scope.editingInProgress = false;
             $scope.dnsZoneName = "";
             $scope.isSubscriptionNotSelected = true;
             $scope.isResourceGroupNotSelected = true;
             $scope.newARecRoot = "";
-         
+            $scope.FirstLoad = true;
+            $scope.ARecs = null;
+            $scope.bulkTTL = '';
             ////////////////////////////////////INIT
             $scope.populate = function () {
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
                 recordSetSvc.getItems('A').success(function (results) {
-                    //A
+                    var del = $scope.ARecs;
+                    var i;
+                    for (i = 0; i < results.value.length; i++) {
+                        if (del == null) {
+                             results.value[i].imgEdit = '../../../Content/img/edit32.png';
+                        }
+                        else if (del[i].editModeOn != null &&
+                            del[i].editModeOn === true) {
+                            results.value[i].editModeOn = true;
+                            results.value[i].imgEdit = '../../../Content/img/edit32.png';
+                        } else {
+                            results.value[i].imgEdit = '../../../Content/img/edit32.png';
+                        }
+                    }
                     $scope.ARecs = results.value;
                     $scope.spinner = {active: false};
                 }).error(function (err) {
-                    $scope.error = err;
+                    $scope.error = err.code + ': ' + err.message;
                     $scope.spinner = {active: false};
                 });
             };
             /////////////////////////////////////// A RECORDS
             $scope.addA = function () {
+                $scope.error = null;
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                recordSetSvc.addA($scope.newARecRoot).success(function (results) {
+                recordSetSvc.addA($scope.newARecRoot, 300).success(function (results) {
                     $scope.newARecRoot = "";
                     $scope.populate();
                 }).error(function (err) {
-                    $scope.error = err;
+                    $scope.error = err.code + ': ' + err.message;
                     $scope.spinner = { active: false };
                 });
             };
@@ -42,36 +58,66 @@ angular.module('AzureDNSUI')
                     if ($scope.ARecs[x].id == id) return $scope.ARecs[x];
                 }
             };
-            $scope.updateA = function (item, sub) {
+            $scope.editSwitchPanel = function (item) {
+                if (item.editModeOn == null || item.editModeOn === false) {
+                    item.editModeOn = true;
+                    item.imgEdit = '../../../Content/img/edit32a.png';
+                } else {
+                    item.editModeOn = false;
+                    item.imgEdit = '../../../Content/img/edit32.png';
+                }
+            };
+            $scope.updateTTLBulk = function () {
+                $scope.error = null;
+                var del = $scope;
+                var e = document.getElementById("txtBulkTTL").value;
+
+                $scope.spinner = { active: true };
+
+                var defer = $q.defer();
+                var promises = [];
+                for (var i = 0; i < del.ARecs.length; i++) {
+                    del.ARecs[i].properties.TTL = e;
+                    var param = del.getParamForUpdate(null, del.ARecs[i], true, true);
+                    promises.push(recordSetSvc.updateA(param, e));
+                }
+                $q.all(promises).then(function() {
+                    $scope.spinner = { active: false };
+                });
+            };
+            $scope.getParamForUpdate = function (item, sub, ttl, skipUpdate) {
+                if (!skipUpdate) { $scope.error = null; };
+                if (ttl == null) ttl = false;
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = sub.id;
                 // if this is not empty there is a new value to add $scope.newARecRoot, but check if exists already
-                // if item.ipv4add is not the same as editInProgressA.ipv4add then it has chagned, del/add from array
+                // if item.ipv4add is not the same as editInProgressItem.ipv4add then it has chagned, del/add from array
                 // need the full array of values
                 var newVal = '';
-                var replacing = false;
                 if (sub.newARec != '') { newVal = sub.newARec; }
-                if (item != null && item.ipv4Address != $scope.editInProgressA.ipv4Address) { replacing = true; }
+                if (item != null && item.ipv4Address != $scope.editInProgressItem.ipv4Address) { replacing = true; }
                 var param = Array();
-                var newValExist = false;
                 var del = $scope.GetARec(sub.id);
                 for (var x = 0; x < sub.properties.ARecords.length; x++) {
                     param[x] = del.properties.ARecords[x];
-                    if (del.properties.ARecords[x].ipv4Address == newVal) { newValExist = true; }
-                    if (replacing && param[x].ipv4Address == item.ipv4Address) { param[x].ip = $scope.editInProgressA.ipv4Address; }
                 }
-
-                if (item == null && !newValExist) { param[sub.properties.ARecords.length != 0 ? x : 0] = { ipv4Address: newVal }; }
-
-                recordSetSvc.updateA(param).success(function (results) {
+                // if not edit or TTL update, and the new item is not empty, then add new record to array
+                if (!ttl && item == null && sub.newARec != '') { param[sub.properties.ARecords.length != 0 ? x : 0] = { ipv4Address: newVal }; }
+                return param;
+            };
+            $scope.updateA = function (item, sub, ttl, skipUpdate) {
+                getParamForUpdate(item, sub, ttl, skipUpdate);
+                if (skipUpdate == null) skipUpdate = false;
+                recordSetSvc.updateA(param, sub.properties.TTL).success(function (results) {
                     sub.newARec = "";
-                    $scope.populate();
+                    if (!skipUpdate){ $scope.populate();};
                 }).error(function (err) {
-                    $scope.error = err;
+                    $scope.error = err.code + ': ' + err.message;
                     $scope.spinner = { active: false };
                 });
             };
             $scope.delete = function (item, subid) {
+                $scope.error = null;
                 $scope.spinner = { active: true };
                 var param = Array();
                 var del = $scope.GetARec(subid);
@@ -89,15 +135,21 @@ angular.module('AzureDNSUI')
                     recordSetSvc.updateA(param).success(function (results) {
                         $scope.populate();
                     }).error(function (err) {
-                        $scope.error = err;
+                        $scope.error = err.code + ': ' + err.message;
                         $scope.spinner = { active: false };
                     });
                 }).error(function (err) {
-                    $scope.error = err;
+                    $scope.error = err.code + ': ' + err.message;
                     $scope.spinner = { active: false };
                 });;
             }
 
+            $scope.editSwitch = function (item) {
+                item.edit = !item.edit;
+                if (item.edit) {
+                    $scope.editInProgressItem = item;
+                }
+            };
 
 
         }]);

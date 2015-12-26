@@ -127,25 +127,25 @@ angular.module('AzureDNSUI')
         //        ]
         //    }
         //}
-        addA: function (hostName)
+        addA: function (hostName, TTL)
         {
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
+            o.properties.TTL = TTL;
             o.properties.ARecords = new Object();
             return $http.put(this.CallURL() + '/A/' + hostName + '?api-version=2015-05-04-preview', o);
         },
-        updateA: function (aRecords) {
+        updateA: function (aRecords, TTL) {
             
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
+            o.properties.TTL = TTL;
             o.properties.ARecords = aRecords;
-            
+            console.log(o);
             return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
         },
         deleteA: function () {
@@ -224,22 +224,22 @@ AAAA
         deleteAAAA: function () {
             return $http.delete(this.CallURL() + '?api-version=2015-05-04-preview');
         },
-        addAAAA: function (hostName) {
+        addAAAA: function (hostName,TTL) {
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
+            o.properties.TTL = TTL;
             o.properties.AAAARecords = new Object();
             return $http.put(this.CallURL() + '/AAAA/' + hostName + '?api-version=2015-05-04-preview', o);
         },
-        updateAAAA: function (aaaaRecords) {
+        updateAAAA: function (aaaaRecords, TTL) {
 
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
+            o.properties.TTL = TTL;
             o.properties.AAAARecords = aaaaRecords;
 
             return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
