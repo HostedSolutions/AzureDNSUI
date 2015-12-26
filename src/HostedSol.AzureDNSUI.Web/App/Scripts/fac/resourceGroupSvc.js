@@ -25,11 +25,7 @@ angular.module('AzureDNSUI')
         },
         getItems: function () {
             var url = this.CallURL();
-            console.log(url)
             return $http.get(url + 'resourcegroups?api-version=2014-04-01-preview');
-        },
-        getItem: function (id) {
-            return $http.get('/api/TodoList/' + id);
         }
     };
 }]);

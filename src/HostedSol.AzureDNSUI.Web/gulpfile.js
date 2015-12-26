@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild='clean' AfterBuild='minify, scripts' />
+﻿/// <binding BeforeBuild='clean' AfterBuild='minify, scripts' ProjectOpened='watch' />
 // include plug-ins
 var gulp = require('gulp');
 var concat = require('gulp-concat');
@@ -8,6 +8,9 @@ var rename = require('gulp-rename');
 var minifyCss = require('gulp-minify-css');
 var sourcemaps = require('gulp-sourcemaps');
 
+gulp.task('watch', function () {
+    return gulp.watch(config.AppJSsrc, ['scripts']);
+});
 gulp.task('default', function () {
 });
 

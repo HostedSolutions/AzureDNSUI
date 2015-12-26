@@ -1,68 +1,66 @@
 ﻿<div ng-init="populate()">
     <p class="error">{{error}}</p>
-    <p>{{loadingMessage}}</p>
     <div class="panel">
-        <div data-ng-hide="isLoading">Select your subscription and resource group below, if you subscription is not registered for Microsoft.Network resource provider it
-            will be automatically registered when you selected it below.</div>
-        <br/>
-        <!--
-            
-        TODO implment bootstrap dropdown
-        <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a href="#">HTML</a></li>
-    <li><a href="#">CSS</a></li>
-    <li><a href="#">JavaScript</a></li>
-  </ul>
-</div>    
-        -->
-
+        <div data-ng-hide="isLoading">
+            Select your subscription and resource group below, if you subscription is not registered for Microsoft.Network resource provider it
+            will be automatically registered when you selected it below.
+        </div>
+        <br />
         <div class="loader" data-loading></div>
-        Subscription:
-        <select id="AzureSubscription" data-ng-hide="isLoading"
-                ng-change="changeSubscription(subListSelected)"
-                ng-model="subListSelected"
-                ng-options="item.id as item.displayName for item in subList">
-        </select>
-        <span data-ng-hide="isSubscriptionNotSelected">Resource Group: </span>
-        <select id="AzureResourceGroup" data-ng-hide="isSubscriptionNotSelected"
-                ng-change="changeResourceGroup(resourceGroupListSelected)"
-                ng-model="resourceGroupListSelected"
-                ng-options="item.id as item.name for item in resourceGroupList">
-        </select>
-
-        <treasure-overlay-spinner active='spinner.active'>
-            <table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
-                <tbody>
-                <tr>
-                    <td>Domains</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr data-ng-repeat="item in dnsZoneList">
-                    <td>
-                        <p data-ng-hide="item.edit">{{item.name}}</p>
-                    </td>
-                    <td>
-                        <p>
-                            <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
-                            <a href="javascript:;">Delete</a>
-                            <!--data-ng-click="delete(item.ID)"-->
-                        </p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </treasure-overlay-spinner>
-        <div class="col-xs-4">
-            <div class="input-group" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
-                <input ng-model="newDnsZoneName" class="form-control" />
-                <span class="input-group-btn">
-                    <button ng-click="add();" class="btn btn-primary">Add</button>
-                </span>
+        <div class="col-xs-4 col-md-4">
+            Subscription:
+            <div class="dropdown" data-ng-hide="isLoading">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{selectedItem.displayName}}
+                    <span class="caret "></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="item in subList"><a ng-click="changeSubscription(item)">{{item.displayName}}</a></li>
+                </ul>
             </div>
         </div>
+        <div class="col-xs-4 col-md-4">
+            <span data-ng-hide="isSubscriptionNotSelected">Resource Group: </span>
+            <div class="dropdown" data-ng-hide="isSubscriptionNotSelected">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    {{selectedRg.name}}
+                    <span class="caret "></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="item in resourceGroupList"><a ng-click="changeResourceGroup(item)">{{item.name}}</a></li>
+                </ul>
+            </div>
+        </div>
+            <treasure-overlay-spinner active='spinner.active'>
+                <table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
+                    <tbody>
+                        <tr>
+                            <td>Domains</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr data-ng-repeat="item in dnsZoneList">
+                            <td>
+                                <p data-ng-hide="item.edit">{{item.name}}</p>
+                            </td>
+                            <td>
+                                <p>
+                                    <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
+                                    <a href="javascript:;">Delete</a>
+                                    <!--data-ng-click="delete(item.ID)"-->
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </treasure-overlay-spinner>
+            <div class="col-xs-4">
+                <div class="input-group" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
+                    <input ng-model="newDnsZoneName" class="form-control" />
+                    <span class="input-group-btn">
+                        <button ng-click="add();" class="btn btn-primary">Add</button>
+                    </span>
+                </div>
+            </div>
 
-</div>
-</div>
+        </div>
+    </div>
