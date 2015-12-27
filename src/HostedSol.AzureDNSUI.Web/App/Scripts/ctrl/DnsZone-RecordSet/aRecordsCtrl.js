@@ -28,7 +28,6 @@ angular.module('AzureDNSUI')
                              results.value[i].imgEdit = '../../../Content/img/edit32.png';
                         }
                         else if (del[i].editModeOn != null ) {
-                            console.log(del.length);
                             results.value[i].editModeOn = del[i].editModeOn;
                             results.value[i].imgEdit = del[i].editModeOn ? '../../../Content/img/edit32a.png' : '../../../Content/img/edit32.png';
                         } else {
@@ -53,7 +52,6 @@ angular.module('AzureDNSUI')
                     $scope.newARecRoot = "";
                     $scope.populate();
                     }).error(function (err) {
-                    console.log(err);
                     $scope.error = err.error.code + ': ' + err.error.message;
                     $scope.spinner = { active: false };
                 });
@@ -82,7 +80,7 @@ angular.module('AzureDNSUI')
                 var promises = [];
                 for (var i = 0; i < this.ARecs.length; i++) {
                     del.ARecs[i].properties.TTL = e;
-                    var param = this.getParamForUpdate(null, this.ARecs[i], true, true);
+                    var param = $scope.getParamForUpdate(null, this.ARecs[i], true, true);
                     promises.push(recordSetSvc.updateA(param, e));
                 }
                 $q.all(promises).then(function() {
@@ -110,7 +108,7 @@ angular.module('AzureDNSUI')
                 return param;
             };
             $scope.updateA = function (item, sub, ttl, skipUpdate) {
-                getParamForUpdate(item, sub, ttl, skipUpdate);
+                var param=$scope.getParamForUpdate(item, sub, ttl, skipUpdate);
                 if (skipUpdate == null) skipUpdate = false;
                 recordSetSvc.updateA(param, sub.properties.TTL).success(function (results) {
                     sub.newARec = "";
