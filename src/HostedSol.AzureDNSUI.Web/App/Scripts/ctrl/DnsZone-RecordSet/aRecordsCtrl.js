@@ -80,9 +80,9 @@ angular.module('AzureDNSUI')
                 $scope.spinner = { active: true };
 
                 var promises = [];
-                for (var i = 0; i < del.ARecs.length; i++) {
+                for (var i = 0; i < this.ARecs.length; i++) {
                     del.ARecs[i].properties.TTL = e;
-                    var param = del.getParamForUpdate(null, del.ARecs[i], true, true);
+                    var param = this.getParamForUpdate(null, this.ARecs[i], true, true);
                     promises.push(recordSetSvc.updateA(param, e));
                 }
                 $q.all(promises).then(function() {

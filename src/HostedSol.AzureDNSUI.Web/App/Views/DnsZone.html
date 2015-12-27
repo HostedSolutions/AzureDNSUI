@@ -9,50 +9,51 @@
         <div class="loader" data-loading></div>
         <div class="col-xs-4 col-md-4">
             Subscription:
-            <div class="dropdown" data-ng-hide="isLoading">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <div class="dropdown" data-ng-hide="isLoading" uib-dropdown>
+                <button class="btn btn-primary" data-placeholder="Please select" uib-dropdown-toggle type="button" data-toggle="dropdown" 
+                        style="min-width:auto;width:100%;">
                     {{selectedItem.displayName}}
-                    <span class="caret "></span>
+                    <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
                     <li ng-repeat="item in subList"><a ng-click="changeSubscription(item)">{{item.displayName}}</a></li>
                 </ul>
             </div>
         </div>
         <div class="col-xs-4 col-md-4">
             <span data-ng-hide="isSubscriptionNotSelected">Resource Group: </span>
-            <div class="dropdown" data-ng-hide="isSubscriptionNotSelected">
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+            <div class="dropdown" data-ng-hide="isSubscriptionNotSelected" uib-dropdown>
+                <button class="btn btn-primary" data-placeholder="Please select" uib-dropdown-toggle type="button" data-toggle="dropdown"
+                        style="min-width:auto;width:100%;">
                     {{selectedRg.name}}
                     <span class="caret "></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
                     <li ng-repeat="item in resourceGroupList"><a ng-click="changeResourceGroup(item)">{{item.name}}</a></li>
                 </ul>
             </div>
         </div>
-            <treasure-overlay-spinner active='spinner.active'>
-                <table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
-                    <tbody>
-                        <tr>
-                            <td>Domains</td>
-                            <td>&nbsp;</td>
-                        </tr>
-                        <tr data-ng-repeat="item in dnsZoneList">
-                            <td>
-                                <p data-ng-hide="item.edit">{{item.name}}</p>
-                            </td>
-                            <td>
-                                <p>
-                                    <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
-                                    <a href="javascript:;">Delete</a>
-                                    <!--data-ng-click="delete(item.ID)"-->
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </treasure-overlay-spinner>
+        <treasure-overlay-spinner active='spinner.active'>
+            <table class="table table-striped" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
+                <tbody>
+                    <tr>
+                        <td>Domains</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr data-ng-repeat="item in dnsZoneList">
+                        <td>
+                            <p data-ng-hide="item.edit">{{item.name}}</p>
+                        </td>
+                        <td>
+                            <p>
+                                <a ui-sref="RecordSet({id: item.id})" href="javascript:;">Edit</a> |
+                                <a href="javascript:;">Delete</a>
+                                <!--data-ng-click="delete(item.ID)"-->
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="col-xs-4">
                 <div class="input-group" data-ng-hide="isSubscriptionNotSelected || isResourceGroupNotSelected">
                     <input ng-model="newDnsZoneName" class="form-control" />
@@ -61,6 +62,7 @@
                     </span>
                 </div>
             </div>
+        </treasure-overlay-spinner>
 
         </div>
     </div>

@@ -3,16 +3,15 @@ angular.module('AzureDNSUI')
 .controller('dnsZoneCtrl', ['$scope', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'subscriptionsSvc', 'resourceGroupSvc',
                         function ($scope, $location, dnsZoneSvc, adalService, subscriptionSvc, resourceGroupSvc) {
     $scope.error = "";
-    $scope.selectedItem = null;
-    $scope.selectedRg = null;
+    $scope.selectedItem = { displayName: "Please Select"};
+    $scope.selectedRg = { name: "Please Select" };
     $scope.spinner = { active: true };
     $scope.todoList = null;
     $scope.editingInProgress = false;
     $scope.dnsZoneName = "";
     $scope.isSubscriptionNotSelected = true;
     $scope.isResourceGroupNotSelected = true;
-                           
-                            ////////////////////////////////////
+    ////////////////////////////////////
     $scope.populate = function () {
         subscriptionSvc.getItems().success(function (results) {
             $scope.subList = results.value;
@@ -24,7 +23,7 @@ angular.module('AzureDNSUI')
             $scope.spinner = { active: false };
         });
     };
-                            ////////////////////////////////////
+    ////////////////////////////////////
     $scope.changeSubscription = function (item) {
         $scope.selectedItem = item;
         resourceGroupSvc.subscriptionId = item.id;

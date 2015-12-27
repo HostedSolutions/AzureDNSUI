@@ -3,7 +3,7 @@ angular.module('AzureDNSUI', ['AdalAngular', 'ui.router',
   'ui.bootstrap',
   'ui.router.tabs',
 'treasure-overlay-spinner',
-'ngAnimate'])
+'ngAnimate', 'ui.bootstrap'])
 .config(['$urlRouterProvider', '$httpProvider', '$stateProvider', 'adalAuthenticationServiceProvider', function ($routeProvider, $httpProvider, $stateProvider, adalProvider) {
 
     $routeProvider.otherwise("/Home");
