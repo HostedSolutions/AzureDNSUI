@@ -5,13 +5,11 @@ angular.module('AzureDNSUI')
         function($scope,$state, $location, $q,dnsZoneSvc, adalService, recordSetSvc) {
             $scope.error = null;
             //$scope.spinner = {active: true};
-            $scope.todoList = null;
             $scope.editingInProgress = false;
             $scope.dnsZoneName = "";
             $scope.isSubscriptionNotSelected = true;
             $scope.isResourceGroupNotSelected = true;
             $scope.newARecRoot = "";
-            $scope.FirstLoad = true;
             $scope.ARecs = null;
             $scope.bulkTTL = '';
             $scope.newARecRootIP = '';

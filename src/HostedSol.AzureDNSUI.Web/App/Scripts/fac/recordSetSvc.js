@@ -225,17 +225,16 @@ AAAA
         deleteAAAA: function () {
             return $http.delete(this.CallURL() + '?api-version=2015-05-04-preview');
         },
-        addAAAA: function (hostName,TTL) {
+        addAAAA: function (hostName, IP, TTL) {
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
             o.properties.TTL = TTL;
-            o.properties.AAAARecords = new Object();
+            o.properties.AAAARecords = [{ipv6Address: IP}];
             return $http.put(this.CallURL() + '/AAAA/' + hostName + '?api-version=2015-05-04-preview', o);
         },
         updateAAAA: function (aaaaRecords, TTL) {
-
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();

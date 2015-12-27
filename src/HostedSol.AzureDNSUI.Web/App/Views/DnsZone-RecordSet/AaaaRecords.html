@@ -1,12 +1,28 @@
 ﻿<div ng-init="populate()">
     <treasure-overlay-spinner active='spinner.active'>
+        <div ng-show="error != null" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error</strong> {{error}}
+        </div>
+        <div class="col-md-5"><strong>AAAA Record</strong>&nbsp; (TTL)</div>
+        <div class="col-md-7">&nbsp;</div>
         <div data-ng-repeat="sub in AAAARecs">
-            <div class="col-md-2" style="border-top: solid thin gainsboro">
-                <h4>{{sub.name}}</h4>
+            <div class="col-md-5" style="border-top: solid thin gainsboro">
+                <strong>
+                    {{sub.name}}
+                </strong> ({{sub.properties.TTL}})
+                <a data-ng-click="editSwitchPanel(sub)" href="javascript:;">
+                    <img src="{{sub.imgEdit}}"
+                         style="float: right; width: 24px; height: 24px; margin: 5px;" />
+                </a>
+                <a data-ng-click="deleteRoot(sub)" href="javascript:;">
+                    <img src="../../../Content/img/delete24.png"
+                         style="float: right; width: 24px; height: 24px; margin: 5px;" />
+                </a>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-7">
 
-                <div ng-show="sub.properties.AAAARecords.length == 0">
+                <div ng-show="sub.properties.AAAARecords.length == 0" style="height:34px">
                     <em>There are no IPs for this AAAA Record. Add one below</em>
                 </div>
                 <table class="table table-striped">
@@ -19,7 +35,7 @@
                             <td>
                                 <p data-ng-hide="item.edit">
                                     <a data-ng-click="editSwitch(item)" href="javascript:;">Edit</a> |
-                                    <a data-ng-click="delete(item,sub.id)" href="javascript:;">Delete</a>
+                                    <a data-ng-click="delete(item,sub)" href="javascript:;">Delete</a>
                                 </p>
                                 <p data-ng-show="item.edit">
                                     <a data-ng-click="updateRec(item,sub)" href="javascript:;">Save</a> |
@@ -29,25 +45,42 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="col-xs-4">
+                <div class="col-xs-6" data-ng-show="sub.editModeOn">
                     <div class="input-group" style="padding-bottom: 10px;">
-                        <input ng-model="sub.newRec" class="form-control" placeholder="Add new IP to {{sub.name}}"/>
+                        <input ng-model="sub.newRec" class="form-control" placeholder="Add new IP to {{sub.name}}" />
                         <span class="input-group-btn">
                             <button ng-click="updateRec(null,sub);" class="btn btn-primary">Add</button>
                         </span>
                     </div>
                 </div>
+                <div class="col-xs-6" data-ng-show="sub.editModeOn">
+                    <div class="input-group" style="padding-bottom: 10px;">
+                        <input ng-model="sub.properties.TTL" class="form-control" />
+                        <span class="input-group-btn">
+                            <button ng-click="updateRec(null,sub,true);" class="btn btn-danger">Update TTL</button>
+                        </span>
+                    </div>
                 </div>
-        </div>
-        <div class="col-xs-4">
-            <div class="input-group">
-                <input ng-model="newRecRoot" class="form-control" placeholder="Add new AAAA Record"/>
-                <span class="input-group-btn">
-                    <button ng-click="addRec();" class="btn btn-primary">Add</button>
-                </span>
             </div>
         </div>
+        <div class="col-xs-8">
+            <form class="form-inline">
+                <div class="form-group">
 
+                    <input ng-model="newRecRoot" class="form-control" placeholder="Add new AAAA Record" />
+                </div>
+                <div class="form-group">
+
+                    <input ng-model="newRecRootIP" class="form-control" placeholder="IP Address" />
+                </div>
+                <div class="form-group">
+
+                    <input ng-model="newRecRootTTL" class="form-control" placeholder="TTL" />
+                </div>
+                <button ng-click="addRec();" class="btn btn-primary">Add</button>
+
+            </form>
+        </div>
         <div class="col-xs-4">
             <div class="input-group" style="padding-bottom: 10px;">
                 <input ng-model="bulkTTL" id="txtBulkTTL" class="form-control" />
@@ -56,5 +89,5 @@
                 </span>
             </div>
         </div>
-</treasure-overlay-spinner>
+    </treasure-overlay-spinner>
 </div>
