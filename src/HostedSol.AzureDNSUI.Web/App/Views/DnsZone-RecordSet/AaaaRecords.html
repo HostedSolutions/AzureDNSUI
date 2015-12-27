@@ -40,12 +40,21 @@
                 </div>
         </div>
         <div class="col-xs-4">
-        <div class="input-group">
-            <input ng-model="newRecRoot" class="form-control" placeholder="Add new AAAA Record"/>
-            <span class="input-group-btn">
+            <div class="input-group">
+                <input ng-model="newRecRoot" class="form-control" placeholder="Add new AAAA Record"/>
+                <span class="input-group-btn">
                     <button ng-click="addRec();" class="btn btn-primary">Add</button>
                 </span>
-        </div>
             </div>
+        </div>
+
+        <div class="col-xs-4">
+            <div class="input-group" style="padding-bottom: 10px;">
+                <input ng-model="bulkTTL" id="txtBulkTTL" class="form-control" />
+                <span class="input-group-btn">
+                    <button ng-click="updateTTLBulk();" class="btn btn-danger">Bulk Update TTLs</button>
+                </span>
+            </div>
+        </div>
 </treasure-overlay-spinner>
 </div>

@@ -213,6 +213,7 @@
     <Content Include="App\Views\DnsZone.html" />
     <Content Include="App\Views\Home.html" />
     <Content Include="App\Views\UserData.html" />
+    <Content Include="Content\img\delete24.png" />
     <Content Include="Content\img\edit32.png" />
     <Content Include="Content\img\edit32a.png" />
     <Content Include="Content\Site.css" />

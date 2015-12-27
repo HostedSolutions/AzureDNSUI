@@ -14,21 +14,23 @@ angular.module('AzureDNSUI')
             $scope.FirstLoad = true;
             $scope.ARecs = null;
             $scope.bulkTTL = '';
+            $scope.newARecRootIP = '';
+            $scope.newARecRootTTL = '';
+
             ////////////////////////////////////INIT
             $scope.populate = function () {
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
                 recordSetSvc.getItems('A').success(function (results) {
                     var del = $scope.ARecs;
-                    var i;
-                    for (i = 0; i < results.value.length; i++) {
-                        if (del == null) {
+                    for (var i = 0; i < results.value.length; i++) {
+                        if (del == null || i >= del.length) {
                              results.value[i].imgEdit = '../../../Content/img/edit32.png';
                         }
-                        else if (del[i].editModeOn != null &&
-                            del[i].editModeOn === true) {
-                            results.value[i].editModeOn = true;
-                            results.value[i].imgEdit = '../../../Content/img/edit32.png';
+                        else if (del[i].editModeOn != null ) {
+                            console.log(del.length);
+                            results.value[i].editModeOn = del[i].editModeOn;
+                            results.value[i].imgEdit = del[i].editModeOn ? '../../../Content/img/edit32a.png' : '../../../Content/img/edit32.png';
                         } else {
                             results.value[i].imgEdit = '../../../Content/img/edit32.png';
                         }
@@ -36,7 +38,7 @@ angular.module('AzureDNSUI')
                     $scope.ARecs = results.value;
                     $scope.spinner = {active: false};
                 }).error(function (err) {
-                    $scope.error = err.code + ': ' + err.message;
+                    $scope.error = err.error.code + ': ' + err.error.message;
                     $scope.spinner = {active: false};
                 });
             };
@@ -45,11 +47,14 @@ angular.module('AzureDNSUI')
                 $scope.error = null;
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
-                recordSetSvc.addA($scope.newARecRoot, 300).success(function (results) {
+                //$scope fails here so need to use this, unsure why
+                recordSetSvc.addA(this.newARecRoot, this.newARecRootIP,
+                    this.newARecRootTTL).success(function (results) {
                     $scope.newARecRoot = "";
                     $scope.populate();
-                }).error(function (err) {
-                    $scope.error = err.code + ': ' + err.message;
+                    }).error(function (err) {
+                    console.log(err);
+                    $scope.error = err.error.code + ': ' + err.error.message;
                     $scope.spinner = { active: false };
                 });
             };
@@ -74,7 +79,6 @@ angular.module('AzureDNSUI')
 
                 $scope.spinner = { active: true };
 
-                var defer = $q.defer();
                 var promises = [];
                 for (var i = 0; i < del.ARecs.length; i++) {
                     del.ARecs[i].properties.TTL = e;
@@ -116,7 +120,22 @@ angular.module('AzureDNSUI')
                     $scope.spinner = { active: false };
                 });
             };
+            $scope.deleteRoot = function(sub) {
+                if (confirm("Are you sure you want to delete this entire A Record?")) {
+                    $scope.error = null;
+                    $scope.spinner = { active: true };
+
+                    recordSetSvc.recordSet = sub.id;
+                    recordSetSvc.deleteA().success(function(results) {
+                        $scope.populate();
+                    }).error(function(err) {
+                        $scope.error = err.code + ': ' + err.message;
+                        $scope.spinner = { active: false };
+                    });
+                }
+            };
             $scope.delete = function (item, subid) {
+
                 $scope.error = null;
                 $scope.spinner = { active: true };
                 var param = Array();
@@ -131,17 +150,12 @@ angular.module('AzureDNSUI')
                 }
 
                 recordSetSvc.recordSet = subid;
-                recordSetSvc.deleteA(subid).success(function (results) {
                     recordSetSvc.updateA(param).success(function (results) {
                         $scope.populate();
                     }).error(function (err) {
                         $scope.error = err.code + ': ' + err.message;
                         $scope.spinner = { active: false };
                     });
-                }).error(function (err) {
-                    $scope.error = err.code + ': ' + err.message;
-                    $scope.spinner = { active: false };
-                });;
             }
 
             $scope.editSwitch = function (item) {

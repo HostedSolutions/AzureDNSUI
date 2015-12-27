@@ -127,14 +127,15 @@ angular.module('AzureDNSUI')
         //        ]
         //    }
         //}
-        addA: function (hostName, TTL)
+        addA: function (hostName,IP, TTL)
         {
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
             o.properties.TTL = TTL;
-            o.properties.ARecords = new Object();
+            o.properties.ARecords = [{ ipv4Address: IP }];
+            console.log(o);
             return $http.put(this.CallURL() + '/A/' + hostName + '?api-version=2015-05-04-preview', o);
         },
         updateA: function (aRecords, TTL) {
