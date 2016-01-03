@@ -190,6 +190,7 @@
     <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\srvRecordsCtrl.js" />
     <Content Include="App\Scripts\ctrl\DnsZone-RecordSet\txtRecordsCtrl.js" />
     <Content Include="App\Scripts\ctrl\RecordSetCtrl.js" />
+    <Content Include="App\Scripts\fac\errorHandleSvc.js" />
     <Content Include="App\Scripts\fac\loggerSvc.js" />
     <Content Include="App\Scripts\lib\adal-angular.js" />
     <Content Include="App\Scripts\lib\adal.js" />

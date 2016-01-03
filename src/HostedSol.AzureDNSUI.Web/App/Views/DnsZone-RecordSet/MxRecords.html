@@ -1,12 +1,28 @@
 ﻿<div ng-init="populate()">
     <treasure-overlay-spinner active='spinner.active'>
+        <div ng-show="error != null" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error</strong> {{error}}
+        </div>
+        <div class="col-md-4"><strong>MX Record</strong>&nbsp; (TTL)</div>
+        <div class="col-md-8">&nbsp;</div>
         <div data-ng-repeat="sub in MXRecs">
-            <div class="col-md-2" style="border-top: solid thin gainsboro">
-                <h4>{{sub.name}}</h4>
+            <div class="col-md-4" style="border-top: solid thin gainsboro">
+                <strong>
+                    {{sub.name}}
+                </strong> ({{sub.properties.TTL}})
+                <a data-ng-click="editSwitchPanel(sub)" href="javascript:;">
+                    <img src="{{sub.imgEdit}}"
+                         style="float: right; width: 24px; height: 24px; margin: 5px;" />
+                </a>
+                <a data-ng-click="deleteRoot(sub)" href="javascript:;">
+                    <img src="../../../Content/img/delete24.png"
+                         style="float: right; width: 24px; height: 24px; margin: 5px;" />
+                </a>
             </div>
-            <div class="col-md-10" style="padding-bottom: 10px;">
+            <div class="col-md-8" style="padding-bottom: 10px;">
 
-                <div ng-show="sub.properties.MXRecords.length == 0">
+                <div ng-show="sub.properties.MXRecords.length == 0" style="height:34px">
                     <em>There are no IPs for this MX Record. Add one below</em>
                 </div>
                 <table class="table table-striped" ng-show="sub.properties.MXRecords.length != 0">
@@ -26,7 +42,7 @@
                         <td>
                             <p data-ng-hide="item.edit">
                                 <a data-ng-click="editSwitch(item)" href="javascript:;">Edit</a> |
-                                <a data-ng-click="delete(item,sub.id)" href="javascript:;">Delete</a>
+                                <a data-ng-click="delete(item,sub)" href="javascript:;">Delete</a>
                             </p>
                             <p data-ng-show="item.edit">
                                 <a data-ng-click="updateRec(item,sub)" href="javascript:;">Save</a> |
@@ -36,30 +52,52 @@
                     </tr>
                     </tbody>
                 </table>
-                <div>Add new MX Record</div>
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label class="sr-only" for="inputAddExchange">Exchange</label>
-                        <input ng-model="sub.newRecExchange" type="text" class="form-control" id="inputAddExchange" placeholder="Exchange">
+                <div class="col-xs-8" data-ng-show="sub.editModeOn">
+                    <div class="form-inline" style="padding-bottom: 10px;">
+                        <div class="form-group">
+                            <input ng-model="sub.newRec" class="form-control" placeholder="Add new Mail Exchange to {{sub.name}}"/>
+                        </div>
+                        <div class="form-group">
+                            <input ng-model="sub.newRecP" class="form-control" placeholder="Pref" style="max-width: 80px"/>
+                            </div>
+                                <button ng-click="updateRec(null,sub);" class="btn btn-primary">Add</button>
+                        </div>
+                </div>
+                <div class="col-xs-4" data-ng-show="sub.editModeOn">
+                    <div class="input-group" style="padding-bottom: 10px;">
+                        <input ng-model="sub.properties.TTL" class="form-control" />
+                        <span class="input-group-btn">
+                            <button ng-click="updateRec(null,sub,true);" class="btn btn-danger">Update TTL</button>
+                        </span>
                     </div>
-                    <div class="form-group">
-                        <label class="sr-only" for="inputAddPreference">Preference</label>
-                        <input ng-model="sub.newRecPreference" type="text" class="form-control" id="inputAddPreference" placeholder="Preference">
-                    </div>
-                    <button ng-click="updateRec(null,sub);" type="submit" class="btn btn-primary">Add</button>
-                </form>
-
+                </div>
             </div>
         </div>
-    </treasure-overlay-spinner>
-        <div class="col-xs-4">
-            <div>Add new MX Domain</div>
-            <div class="input-group">
-                    <input id="inputAddDomain" ng-model="newRecRootDomain" class="form-control" placeholder="Domain" />
-              
-                <span class="input-group-btn">
-                    <button ng-click="addRec();" type="submit" class="btn btn-primary">Add</button>
-                </span>  
+            <div class="col-xs-8">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input ng-model="newRecRoot" class="form-control" placeholder="Add new MX Record"/>
+                    </div>
+                    <div class="form-group">
+                        <input ng-model="newRecRootAddy" class="form-control" placeholder="Address"/>
+                    </div>
+                    <div class="form-group">
+                        <input ng-model="newRecRootPref" class="form-control" placeholder="Pref." style="max-width: 80px;" />
+                    </div>
+                    <div class="form-group">
+                        <input ng-model="newRecRootTTL" class="form-control" placeholder="TTL" style="max-width: 80px;"/>
+                    </div>
+                    <button ng-click="addRec();" class="btn btn-primary">Add</button>
+                </div>
             </div>
-    </div>
+            <div class="col-xs-4">
+                <div class="input-group" style="padding-bottom: 10px;">
+                    <input ng-model="bulkTTL" class="form-control"/>
+                    <span class="input-group-btn">
+                            <button ng-click="updateTTLBulk();" class="btn btn-danger">Bulk Update TTLs</button>
+                        </span>
+                </div>
+            </div>
+
+            </treasure-overlay-spinner>
 </div>

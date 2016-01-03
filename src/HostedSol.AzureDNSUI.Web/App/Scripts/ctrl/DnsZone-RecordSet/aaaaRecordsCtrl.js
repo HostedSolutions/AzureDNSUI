@@ -89,10 +89,9 @@ angular.module('AzureDNSUI')
                 return param;
             };
             $scope.updateRec = function (item, sub, ttl, skipUpdate) {
-                console.log("prog");
                 var param = $scope.getParamForUpdate(item, sub, ttl, skipUpdate);
 
-                recordSetSvc.updateAAAA(param).success(function () {
+                recordSetSvc.updateAAAA(param,sub.properties.TTL).success(function () {
                     sub.newRec = "";
                     $scope.populate();
                 }).error(function (err) {
@@ -102,7 +101,7 @@ angular.module('AzureDNSUI')
             };
             $scope.deleteRoot = function (sub) {
                 $scope.error = null;
-                if (confirm("Are you sure you want to delete this entire A Record?")) {
+                if (confirm("Are you sure you want to delete this entire AAAA Record?")) {
                     $scope.error = null;
                     $scope.spinner = { active: true };
 
@@ -142,7 +141,6 @@ angular.module('AzureDNSUI')
                     $scope.spinner = { active: false };
                 });;
             }
-
             $scope.editSwitch = function (item) {
                 item.edit = !item.edit;
                 if (item.edit) {
@@ -174,8 +172,7 @@ angular.module('AzureDNSUI')
             };
             $scope.updateTTLBulk = function () {
                 $scope.error = null;
-                var e = document.getElementById("txtBulkTTL").value;
-
+                var e = $scope.bulkTTL;
                 $scope.spinner = { active: true };
 
                 var promises = [];

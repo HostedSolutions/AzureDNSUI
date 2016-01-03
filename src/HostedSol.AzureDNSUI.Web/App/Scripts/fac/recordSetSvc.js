@@ -349,24 +349,22 @@ MX
         deleteMX: function () {
             return $http.delete(this.CallURL() + '?api-version=2015-05-04-preview');
         },
-        addMX: function (hostName) {
+        addMX: function (hostName,TTL,param) {
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
-            o.properties.MXRecords = new Object();
+            o.properties.TTL = TTL;
+            o.properties.MXRecords = param;
             return $http.put(this.CallURL() + '/MX/' + hostName + '?api-version=2015-05-04-preview', o);
         },
-        updateMX: function (mxRecords) {
-
+        updateMX: function (mxRecords,TTL) {
             var o = new Object();
             o.location = 'global';
             o.tags = new Object();
             o.properties = new Object();
-            o.properties.TTL = 300;
+            o.properties.TTL = TTL;
             o.properties.MXRecords = mxRecords;
-
             return $http.put(this.CallURL() + '?api-version=2015-05-04-preview', o);
         },
         /*
