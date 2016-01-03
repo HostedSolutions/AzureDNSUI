@@ -1,58 +1,68 @@
 ﻿<div ng-init="populate()">
     <treasure-overlay-spinner active='spinner.active'>
-            
-            <div class="col-md-12">
 
-                <table class="table table-striped">
-                    <tbody>
-                    <tr>
-                        <th> Record</th>
-                        <th> TTL</th>
-                        <th> Value</th>
-                        <th></th>
-                    </tr>
-                    <tr data-ng-repeat="sub in CNAMERecs">
-                        <!--sub.properties.AAAARecords-->
-                        <td>{{sub.name}}</td>
-                        <td>
-                            <p data-ng-hide="sub.edit">{{sub.TTL}}</p>
-                    <input data-ng-show="sub.edit" type="text" data-ng-model="editInProgressItem.TTL" class="form-control" /></td>
-                        <td>
-                            <p data-ng-hide="sub.edit">{{sub.value}}</p>
+        <div class="col-md-12">
 
-                            <input data-ng-show="sub.edit" type="text" data-ng-model="editInProgressItem.cname" class="form-control"/>
-                        </td>
-                        <td>
-                            <p data-ng-hide="sub.edit">
-                                <a data-ng-click="editSwitch(sub)" href="javascript:;">Edit</a> |
-                                <a data-ng-click="delete(sub.name)" href="javascript:;">Delete</a>
-                            </p>
-                            <p data-ng-show="sub.edit">
-                                <a data-ng-click="update(sub)" href="javascript:;">Save</a> |
-                                <a data-ng-click="editSwitch(sub)" href="javascript:;">Cancel</a>
-                            </p>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th> Select</th>
+                    <th> Record</th>
+                    <th> TTL</th>
+                    <th> Value</th>
+                    <th></th>
+                </tr>
+                <tr data-ng-repeat="sub in CNAMERecs">
+                    <td><input type="checkbox" data-ng-model="sub.isSelected" data-ng-hide="sub.edit"/></td>
+                    <td>{{sub.name}}</td>
+                    <td>
+                        <p data-ng-hide="sub.edit">{{sub.TTL}}</p>
+                        <input data-ng-show="sub.edit" type="text" data-ng-model="editInProgressItem.TTL" class="form-control"/></td>
+                    <td>
+                        <p data-ng-hide="sub.edit">{{sub.value}}</p>
 
-                <div class="col-xs-8 col-xs-offset-2">
-                    <div>Add new CNAME Record</div>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <input id="CNAMENewName" ng-model="sub.newRecName" class="form-control" placeholder="Name"/>
-                        </div>
-                        <div class="form-group">
-                            <input id="CNAMENewVale" ng-model="sub.newRecValue" class="form-control" placeholder="Value"/>
-                        </div>
-                        <div class="form-group">
-                            <input id="CNAMENewTTL" ng-model="sub.newRecTTL" class="form-control" placeholder="TTL" />
-                        </div>
-                        <button ng-click="addRec(sub);" type="submit" class="btn btn-primary">Add</button>
+                        <input data-ng-show="sub.edit" type="text" data-ng-model="editInProgressItem.cname" class="form-control"/>
+                    </td>
+                    <td>
+                        <p data-ng-hide="sub.edit">
+                            <a data-ng-click="editSwitch(sub)" href="javascript:;">Edit</a> |
+                            <a data-ng-click="delete(sub.name)" href="javascript:;">Delete</a>
+                        </p>
+                        <p data-ng-show="sub.edit">
+                            <a data-ng-click="update(sub)" href="javascript:;">Save</a> |
+                            <a data-ng-click="editSwitch(sub)" href="javascript:;">Cancel</a>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-                    </form>
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input id="CNAMENewName" ng-model="sub.newRecName" class="form-control" placeholder="Name"/>
                     </div>
+                    <div class="form-group">
+                        <input id="CNAMENewVale" ng-model="sub.newRecValue" class="form-control" placeholder="Value"/>
+                    </div>
+                    <div class="form-group">
+                        <input id="CNAMENewTTL" ng-model="sub.newRecTTL" class="form-control" placeholder="TTL"/>
+                    </div>
+                    <button ng-click="addRec(sub);" type="submit" class="btn btn-primary">Add</button>
                 </div>
-       
+            </div>
+            <div class="col-xs-8 col-xs-offset-2">&nbsp;</div>
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input id="CNAMENewVale" ng-model="bulk.RecValue" class="form-control" placeholder="Value" />
+                    </div>
+                    <div class="form-group">
+                        <input id="CNAMENewTTL" ng-model="bulk.RecTTL" class="form-control" placeholder="TTL" />
+                    </div>
+                    <button ng-click="BulkUpdate();" type="submit" class="btn btn-danger">Bulk Update Selected</button>
+                </div>
+            </div>
+        </div>
     </treasure-overlay-spinner>
 </div>

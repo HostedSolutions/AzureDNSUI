@@ -1,8 +1,8 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
     .controller('DnsZone-RecordSet.cnameRecordsCtrl', [
-        '$scope', '$state', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
-        function ($scope, $state, $location, dnsZoneSvc, adalService, recordSetSvc) {
+        '$scope', '$state','$q', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
+        function ($scope, $state,$q, $location, dnsZoneSvc, adalService, recordSetSvc) {
             $scope.error = "";
             $scope.loadingMessage = "Loading...";
             $scope.spinner = { active: true };
@@ -12,8 +12,26 @@ angular.module('AzureDNSUI')
             $scope.isSubscriptionNotSelected = true;
             $scope.isResourceGroupNotSelected = true;
             $scope.editInProgressItem = Object();
+            $scope.bulk = {RecValue:'',RecTTL:''};
             ////////////////////////////////////
-
+            $scope.BulkUpdate = function () {
+                $scope.error = null;
+                $scope.spinner = { active: true };
+                var promises = [];
+                for (var i = 0; i < $scope.CNAMERecs.length; i++) {
+                    var rec = $scope.CNAMERecs[i];
+                    if (rec.isSelected) {
+                        var param = new Object();
+                        param = { cname: $scope.bulk.RecValue == '' ? rec.value : $scope.bulk.RecValue };
+                        recordSetSvc.recordSet = rec.id;
+                        promises.push(recordSetSvc.updateCNAME(param, $scope.bulk.RecTTL == '' ? rec.TTL : $scope.bulk.RecTTL));
+                    }
+                }
+                $q.all(promises).then(function () {
+                    $scope.populate();
+                    $scope.spinner = { active: false };
+                });
+            };
             $scope.populate = function () {
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
@@ -24,8 +42,9 @@ angular.module('AzureDNSUI')
                                 name: results.value[x].name,
                                 value: results.value[x].properties.CNAMERecord.cname,
                                 id: results.value[x].id,
-                                TTL: results.value[x].properties.TTL
-                            };
+                                TTL: results.value[x].properties.TTL,
+                                isSelected: false
+                        };
                         }
                     $scope.loadingMessage = "";
                     $scope.spinner = { active: false };
@@ -60,21 +79,23 @@ angular.module('AzureDNSUI')
                 }
                 return null;
             };
-
-            $scope.update = function (sub) {
-                $scope.spinner = { active: true };
-                var param = new Object();
-                param = { cname: $scope.editInProgressItem.cname };
-                recordSetSvc.recordSet = sub.id;
-                recordSetSvc.updateCNAME(param, $scope.editInProgressItem.TTL).success(function (results) {
+            $scope.DoUpdate = function(id,value,ttl) {
+                  var param = new Object();
+                param = { cname: value };
+                recordSetSvc.recordSet = id;
+                recordSetSvc.updateCNAME(param, ttl).success(function (results) {
                     $scope.loadingMsg = "";
                     $scope.populate();
-                    $scope.editSwitch(sub);
                 }).error(function (err) {
                     $scope.spinner = { active: false };
                     $scope.error = err;
                     $scope.loadingMessage = "";
                 });
+            };
+            $scope.update = function (sub) {
+                $scope.spinner = { active: true };
+                DoUpdate(sub.id, $scope.editInProgressItem.cname, $scope.editInProgressItem.TTL);
+                $scope.editSwitch(sub);
             };
 
             $scope.editSwitch = function (sub) {
