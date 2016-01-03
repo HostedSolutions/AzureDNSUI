@@ -1,10 +1,9 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
     .controller('DnsZone-RecordSet.aaaaRecordsCtrl', [
-        '$scope', '$state', '$location','$q', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc', 
-        function ($scope, $state, $location,$q, dnsZoneSvc, adalService, recordSetSvc) {
+        '$scope', '$state', '$location', '$q', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc', 'errorHandleSvc',
+        function ($scope, $state, $location, $q, dnsZoneSvc, adalService, recordSetSvc, errorHandleSvc) {
             $scope.error = null;
-            $scope.loadingMessage = "Loading...";
              $scope.spinner = {active: true};
             $scope.editingInProgress = false;
             $scope.editInProgressItem = Object();
@@ -35,11 +34,9 @@ angular.module('AzureDNSUI')
                         }
                     }
                         $scope.AAAARecs = results.value;
-                    $scope.loadingMessage = "";
-                     $scope.spinner = {active: false};
+                        $scope.spinner = { active: false };
                 }).error(function (err) {
-                    $scope.error = err.error.code + ': ' + err.error.message;
-                    $scope.loadingMessage = "";
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                      $scope.spinner = {active: false};
                 });
             };
@@ -52,7 +49,7 @@ angular.module('AzureDNSUI')
                     $scope.newRecRoot = "";
                     $scope.populate();
                 }).error(function (err) {
-                    $scope.error = err.error.code + ': ' + err.error.message;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                      $scope.spinner = {active: false};
                 });
             };
@@ -95,7 +92,7 @@ angular.module('AzureDNSUI')
                     sub.newRec = "";
                     $scope.populate();
                 }).error(function (err) {
-                    $scope.error = err.error.code + ': ' + err.error.message;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                      $scope.spinner = {active: false};
                 });
             };
@@ -133,11 +130,11 @@ angular.module('AzureDNSUI')
                     recordSetSvc.updateAAAA(param).success(function (results) {
                         $scope.populate();
                     }).error(function (err) {
-                        $scope.error = err.error.code + ': ' + err.error.message;
+                        $scope.error = errorHandleSvc.getErrorMessage(err);
                         $scope.spinner = { active: false };
                     });
                 }).error(function (err) {
-                    $scope.error = err.error.code + ': ' + err.error.message;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });;
             }

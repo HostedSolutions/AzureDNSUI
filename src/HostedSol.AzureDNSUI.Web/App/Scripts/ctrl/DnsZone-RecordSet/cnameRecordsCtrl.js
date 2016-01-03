@@ -1,10 +1,9 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
     .controller('DnsZone-RecordSet.cnameRecordsCtrl', [
-        '$scope', '$state','$q', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
-        function ($scope, $state,$q, $location, dnsZoneSvc, adalService, recordSetSvc) {
+        '$scope', '$state', '$q', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc', 'errorHandleSvc',
+        function ($scope, $state, $q, $location, dnsZoneSvc, adalService, recordSetSvc, errorHandleSvc) {
             $scope.error = "";
-            $scope.loadingMessage = "Loading...";
             $scope.spinner = { active: true };
             $scope.todoList = null;
             $scope.editingInProgress = false;
@@ -46,11 +45,9 @@ angular.module('AzureDNSUI')
                                 isSelected: false
                         };
                         }
-                    $scope.loadingMessage = "";
                     $scope.spinner = { active: false };
                 }).error(function (err) {
-                    $scope.error = err;
-                    $scope.loadingMessage = "";
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });
             };
@@ -69,7 +66,7 @@ angular.module('AzureDNSUI')
                         alert('The record you tried to add maybe a duplicate with an existing A Record, the API returned a 409 Conflict error. Please check the data and try again.');
                         return;
                     }
-                    //$scope.error = err;
+                    //$scope.error = errorHandleSvc.getErrorMessage(err);
                     sub.newRecValue = '';
                 });
             };
@@ -84,12 +81,10 @@ angular.module('AzureDNSUI')
                 param = { cname: value };
                 recordSetSvc.recordSet = id;
                 recordSetSvc.updateCNAME(param, ttl).success(function (results) {
-                    $scope.loadingMsg = "";
                     $scope.populate();
                 }).error(function (err) {
                     $scope.spinner = { active: false };
-                    $scope.error = err;
-                    $scope.loadingMessage = "";
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                 });
             };
             $scope.update = function (sub) {
@@ -116,7 +111,7 @@ angular.module('AzureDNSUI')
                 recordSetSvc.deleteCNAME(cname).success(function (results) {
                     $scope.populate();
                 }).error(function (err) {
-                    $scope.error = err;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });
             }

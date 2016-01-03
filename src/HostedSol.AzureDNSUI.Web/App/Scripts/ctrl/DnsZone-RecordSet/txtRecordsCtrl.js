@@ -1,10 +1,9 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
     .controller('DnsZone-RecordSet.txtRecordsCtrl', [
-        '$scope', '$state', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
-        function ($scope, $state, $location, dnsZoneSvc, adalService, recordSetSvc) {
-            $scope.error = "";
-            $scope.loadingMessage = "Loading...";
+        '$scope', '$state', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc', 'errorHandleSvc',
+        function ($scope, $state, $location, dnsZoneSvc, adalService, recordSetSvc, errorHandleSvc) {
+            $scope.error = null;
             $scope.spinner = { active: true };
             $scope.todoList = null;
             $scope.editingInProgress = false;
@@ -27,22 +26,21 @@ angular.module('AzureDNSUI')
                             id: results.value[x].id
                         };
                     }
-                    $scope.loadingMessage = "";
                     $scope.spinner = { active: false };
                 }).error(function (err) {
-                    $scope.error = err;
-                    $scope.loadingMessage = "";
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });
             };
             $scope.addRec = function (sub) {
+                $scope.error = null;
                 $scope.spinner = { active: true };
                 recordSetSvc.recordSet = $scope.dnsZoneSvcID;
                 var newTXT = { value: sub.newRecValue };
                 recordSetSvc.addTXT(sub.newRecTXT, newTXT).success(function (results) {
                     $scope.populate();
                 }).error(function (err) {
-                    $scope.error = err;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });
             };
@@ -54,17 +52,16 @@ angular.module('AzureDNSUI')
             };
 
             $scope.update = function (sub) {
+                $scope.error = null;
                 $scope.spinner = { active: true };
                 var param = Object();
                 param = { value: $scope.editInProgressItem.value };
                 recordSetSvc.recordSet = sub.id;
                 recordSetSvc.updateTXT(param).success(function (results) {
-                    $scope.loadingMsg = "";
                     $scope.populate();
                     $scope.editSwitch(sub);
                 }).error(function (err) {
-                    $scope.error = err;
-                    $scope.loadingMessage = "";
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                 });
             };
 
@@ -81,11 +78,12 @@ angular.module('AzureDNSUI')
                 }
             };
             $scope.delete = function (value) {
+                $scope.error = null;
                 $scope.spinner = { active: true };
                 recordSetSvc.deleteTXT(value).success(function (results) {
                     $scope.populate();
                 }).error(function (err) {
-                    $scope.error = err;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });
             }

@@ -1,8 +1,8 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
     .controller('DnsZone-RecordSet.aRecordsCtrl', [
-        '$scope', '$state', '$location', '$q', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
-        function($scope,$state, $location, $q,dnsZoneSvc, adalService, recordSetSvc) {
+        '$scope', '$state', '$location', '$q', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc', 'errorHandleSvc',
+        function ($scope, $state, $location, $q, dnsZoneSvc, adalService, recordSetSvc, errorHandleSvc) {
             $scope.error = null;
             //$scope.spinner = {active: true};
             $scope.editingInProgress = false;
@@ -35,7 +35,7 @@ angular.module('AzureDNSUI')
                     $scope.ARecs = results.value;
                     $scope.spinner = {active: false};
                 }).error(function (err) {
-                    $scope.error = err.error.code + ': ' + err.error.message;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = {active: false};
                 });
             };
@@ -50,7 +50,7 @@ angular.module('AzureDNSUI')
                     $scope.newARecRoot = "";
                     $scope.populate();
                     }).error(function (err) {
-                    $scope.error = err.error.code + ': ' + err.error.message;
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });
             };

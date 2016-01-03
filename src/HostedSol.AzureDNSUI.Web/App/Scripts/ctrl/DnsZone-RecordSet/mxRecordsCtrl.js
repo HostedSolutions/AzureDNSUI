@@ -34,11 +34,9 @@ angular.module('AzureDNSUI')
                         }
                     }
                     $scope.MXRecs = results.value;
-                    $scope.loadingMessage = "";
                     $scope.spinner = { active: false };
                 }).error(function (err) {
                     errorHandleSvc.getErrorMessage(err);
-                    $scope.loadingMessage = "";
                     $scope.spinner = { active: false };
                 });
             };

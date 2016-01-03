@@ -1,10 +1,9 @@
 ﻿'use strict';
 angular.module('AzureDNSUI')
     .controller('DnsZone-RecordSet.soaRecordsCtrl', [
-        '$scope', '$state', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc',
-        function ($scope, $state, $location, dnsZoneSvc, adalService, recordSetSvc) {
+        '$scope', '$state', '$location', 'dnsZoneSvc', 'adalAuthenticationService', 'recordSetSvc', 'errorHandleSvc',
+        function ($scope, $state, $location, dnsZoneSvc, adalService, recordSetSvc, errorHandleSvc) {
             $scope.error = "";
-            $scope.loadingMessage = "Loading...";
             $scope.spinner = { active: true };
             $scope.todoList = null;
             $scope.editingInProgress = false;
@@ -21,11 +20,9 @@ angular.module('AzureDNSUI')
                 //SOA
                 recordSetSvc.getItems('SOA').success(function (results) {
                     $scope.SOARec = results.value[0].properties.SOARecord;
-                    $scope.loadingMessage = "";
                     $scope.spinner = { active: false };
                 }).error(function (err) {
-                    $scope.error = err;
-                    $scope.loadingMessage = "";
+                    $scope.error = errorHandleSvc.getErrorMessage(err);
                     $scope.spinner = { active: false };
                 });
             }
